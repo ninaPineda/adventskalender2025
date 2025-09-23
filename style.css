@@ -2,20 +2,19 @@
    Farb-Variablen
    =========================== */
 :root {
-  --color-black: #111111;
-  --color-white: #ffffff;
+  --color-black: #031021;
+  --color-white: #d1eff2;
 
   /* Zwei ähnliche Main-Farben + Akzent */
-  --color-main-1: #d8e8ff; /* zartes Blau */
-  --color-main-2: #b7d3ff; /* etwas kräftigeres Blau */
-  --color-accent: #ff7a59; /* warmes Akzent-Orange */
+  --color-main-1: #962a2a; 
+  --color-main-2: #065308; 
+  --color-accent: #f0cc38; 
 
-  /* Abgeleitet */
   --bg: var(--color-white);
   --fg: var(--color-black);
-  --card: #ffffff;
-  --muted: rgba(0,0,0,0.55);
-  --ring: var(--color-accent);
+
+  --header-h: 120px;   /* Höhe deines Headers */
+  --footer-h: 40px;    /* wenn du nen Footer willst */
 }
 
 /* System Dark Mode (optional) */
@@ -34,17 +33,12 @@ html, body { margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-  background:
-    radial-gradient(120% 60% at 0% 0%, var(--color-main-1), transparent 60%),
-    radial-gradient(120% 60% at 100% 0%, var(--color-main-2), transparent 60%),
-    var(--bg);
-  color: var(--fg);
-  min-height: 100dvh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  gap: 12px;
-  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
 }
+
+/* Body ohne Phantom-Abstände */
+html,body{ height:100%; margin:0; }
+h1,h2,h3,p{ margin:0; } /* killt kollabierende Margins */
+
 
 /* Desktop-Blocker: Seite ist nur mobil gedacht */
 .desktop-blocker {
@@ -69,88 +63,91 @@ body {
   }
 }
 
-/* Header */
-.site-header {
-  text-align: center;
-  padding-top: 4px;
-}
-.site-header h1 {
-  margin: 8px 0 2px;
-  font-size: 22px;
-  letter-spacing: 0.3px;
-}
-.subtitle {
-  margin: 0;
-  font-size: 13px;
-  color: var(--muted);
+:root{
+  --header-h: 120px;   /* Höhe deines Headers */
+  --footer-h: 40px;    /* wenn du nen Footer willst */
 }
 
-/* Grid mit 24 Türchen – mobil optimiert */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  padding: 4px 2px 8px;
-  max-width: 560px;
-  margin: 0 auto;
+/* Body ohne Phantom-Abstände */
+html,body{ height:100%; margin:0; }
+h1,h2,h3,p{ margin:0; } /* killt kollabierende Margins */
+
+/* Header sichtbar + PNG unten ausgerichtet */
+.site-header{
+  position: fixed; top:0;
+  height: var(--header-h);
+  width: 100%;
+  display: grid; place-items: center;
+  text-align:center; color:#fff;
+  background: url(assets/header.png) no-repeat bottom center / cover;
+  z-index: 10;
 }
 
-/* Türchen-Karten */
-.door {
+main {
+  top:0;
+  z-index: 0;         /* Standard, bleibt unter dem Header */
+}
+
+/* Ganze Map füllt die Seite */
+.map{
   position: relative;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  background: linear-gradient(180deg, var(--card), rgba(255,255,255,0.85));
-  border: 1px solid rgba(0,0,0,0.06);
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
-  isolation: isolate;
-  overflow: hidden;
+  width: 100%;
+  height: 2800px; /* ≈ Höhe deines assets/map.jpg */
+  background: url(assets/map.jpg) no-repeat bottom center;
+  background-size: 100% auto;
+  overflow: visible; /* wichtig: Buttons dürfen rausgucken */
 }
 
-/* zarter Ring-Effekt */
-.door::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  outline: 2px solid transparent;
-  outline-offset: -2px;
-  pointer-events: none;
-  background: radial-gradient(60% 60% at 50% 30%, rgba(0,0,0,0.05), transparent 60%),
-              linear-gradient(135deg, transparent 60%, rgba(0,0,0,0.03));
-  mix-blend-mode: multiply;
+/* Schritte: 24 Tage -> 23 Abstände */
+.map{ --steps: 23; }
+
+/* Buttons: links mittig, vertikal berechnet */
+.level{
+  position:absolute;
+  left: 50%;
+  top: calc((var(--i) - 1) * (80% / var(--steps)) + 12%);
+  transform: translate(-50%, -50%);
+  width: clamp(44px, 9vw, 58px);
+  aspect-ratio: 1;
+  display:grid; place-items:center;
+  border-radius:50%;
+  background: rgba(255,255,255,.92);
+  border:2px solid #fff;
+  font-weight:800;
+  text-decoration:none;
+  box-shadow: 0 6px 0 rgba(0,0,0,.1);
 }
 
-.door:hover,
-.door:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.12);
-  border-color: var(--ring);
-  outline: none;
-}
-
-.door span {
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  font-size: clamp(18px, 5.5vw, 28px);
-  line-height: 1;
-}
-
-/* kleine Farbakzente pro Tür */
-.door:nth-child(6n+1) { background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--color-main-1) 35%, white 65%)); }
-.door:nth-child(6n+2) { background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--color-main-2) 35%, white 65%)); }
-.door:nth-child(6n+3) { background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--color-main-1) 20%, white 80%)); }
-.door:nth-child(6n+4) { background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--color-main-2) 20%, white 80%)); }
-.door:nth-child(6n+5) { background: linear-gradient(180deg, var(--card), color-mix(in oklab, var(--color-accent) 18%, white 82%)); }
-.door:nth-child(6n)   { background: linear-gradient(180deg, var(--card), rgba(0,0,0,0.03)); }
+/* Index zuweisen: erstes Kind = 24 ganz oben, letztes = 1 ganz unten */
+.map .level:nth-child(1) { --i: 1; }   /* Tag 24 */
+.map .level:nth-child(2) { --i: 2; }   /* Tag 23 */
+.map .level:nth-child(3) { --i: 3; }
+.map .level:nth-child(4) { --i: 4; }
+.map .level:nth-child(5) { --i: 5; }
+.map .level:nth-child(6) { --i: 6; }
+.map .level:nth-child(7) { --i: 7; }
+.map .level:nth-child(8) { --i: 8; }
+.map .level:nth-child(9) { --i: 9; }
+.map .level:nth-child(10){ --i:10; }
+.map .level:nth-child(11){ --i:11; }
+.map .level:nth-child(12){ --i:12; }
+.map .level:nth-child(13){ --i:13; }
+.map .level:nth-child(14){ --i:14; }
+.map .level:nth-child(15){ --i:15; }
+.map .level:nth-child(16){ --i:16; }
+.map .level:nth-child(17){ --i:17; }
+.map .level:nth-child(18){ --i:18; }
+.map .level:nth-child(19){ --i:19; }
+.map .level:nth-child(20){ --i:20; }
+.map .level:nth-child(21){ --i:21; }
+.map .level:nth-child(22){ --i:22; }
+.map .level:nth-child(23){ --i:23; }
+.map .level:nth-child(24){ --i:24; }   /* Tag 1 ganz unten */
 
 /* Footer */
 .site-footer {
+  position: fixed;
+  bottom: 0;
   text-align: center;
   padding: 8px 0 12px;
   color: var(--muted);
