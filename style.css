@@ -104,18 +104,22 @@ main {
 /* Buttons: links mittig, vertikal berechnet */
 .level{
   position:absolute;
-  left: 50%;
-  top: calc((var(--i) - 1) * (80% / var(--steps)) + 12%);
-  transform: translate(-50%, -50%);
-  width: clamp(44px, 9vw, 58px);
+  top: calc((var(--i) - 1) * (80% / var(--steps)) + 10%);
+  width: 5rem;
+  transform: translate(var(--x), var(--y));
+  font-size: xx-large;
   aspect-ratio: 1;
   display:grid; place-items:center;
   border-radius:50%;
-  background: rgba(255,255,255,.92);
-  border:2px solid #fff;
+  background: url(assets/level_1.png) no-repeat center;
+  background-size: 100% auto;
   font-weight:800;
   text-decoration:none;
   box-shadow: 0 6px 0 rgba(0,0,0,.1);
+}
+
+a{
+  color: var(--color-white);
 }
 
 /* Index zuweisen: erstes Kind = 24 ganz oben, letztes = 1 ganz unten */
@@ -145,10 +149,11 @@ main {
 .map .level:nth-child(24){ --i:24; }   /* Tag 1 ganz unten */
 
 /* Footer */
-.site-footer {
+.site-footer, footer {
   position: fixed;
   bottom: 0;
   text-align: center;
+  align-items: center;
   padding: 8px 0 12px;
   color: var(--muted);
   font-size: 12px;
