@@ -20,6 +20,63 @@ function scrollToToday({ behavior = 'smooth', block = 'center' } = {}) {
   if (el) el.scrollIntoView({ behavior, block });
 }
 
+function rightSolution(day) {
+  if (!opened.has(day)) {
+    opened.add(day);
+    saveOpened();
+    updateDaysStyle();
+  }
+
+  // Konfetti-Effekt (rot/grün)
+  confetti({
+    particleCount: 120,
+    spread: 90,
+    origin: { y: 1 },
+    colors: ['#962a2a', '#065308'] // deine Main-Farben
+  });
+
+  // nach 2 Sekunden zurück zur Startseite
+  setTimeout(() => {
+    window.location.href = "../index.html";
+  }, 2000);
+}
+
+function updateDaysStyle() {
+  // erst alle Level zurücksetzen
+  document.querySelectorAll('.level').forEach(level => {
+    level.classList.remove("opened", "unlocked");
+  });
+
+  // alle geöffneten als "opened"
+  opened.forEach(day => {
+    const level = document.querySelector(`.level[data-day="${day}"]`);
+    if (level) level.classList.add("opened");
+  });
+
+  // den neuesten (größten) Tag bestimmen
+  if (opened.size > 0) {
+    const days = Array.from(opened).sort((a, b) => a - b);
+    const latestDay = days[days.length - 1];
+
+    if(latestDay <= todayDay){
+    const newestLevel = document.querySelector(`.level[data-day="${latestDay + 1}"]`);
+    if (newestLevel) newestLevel.classList.add("unlocked");
+  
+    }
+}
+}
+
+document.querySelectorAll('.level').forEach(level => {
+  level.addEventListener('click', (e) => {
+    const isUnlocked = level.classList.contains('unlocked') || level.classList.contains('opened');
+    if (!isUnlocked) {
+      e.preventDefault(); // verhindert, dass der Link öffnet
+      document.getElementById('lockedPopup').showModal();
+    }
+  });
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(scrollToToday);
+  updateDaysStyle();
 });

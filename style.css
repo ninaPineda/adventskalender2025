@@ -74,11 +74,11 @@ h1,h2,h3,p{ margin:0; } /* killt kollabierende Margins */
 
 /* Header sichtbar + PNG unten ausgerichtet */
 .site-header{
-  position: fixed; top:0;
+  position: fixed; top:0; left:15%;
   height: var(--header-h);
-  width: 100%;
+  width: 70%;
   display: grid; place-items: center;
-  text-align:center; color:#fff;
+  text-align: center; color:#fff;
   background: url(assets/header.png) no-repeat bottom center / cover;
   z-index: 10;
 }
@@ -105,17 +105,31 @@ main {
 .level{
   position:absolute;
   top: calc((var(--i) - 1) * (80% / var(--steps)) + 10%);
-  width: 5rem;
+  width: 4.8rem;
   transform: translate(var(--x), var(--y));
   font-size: xx-large;
   aspect-ratio: 1;
   display:grid; place-items:center;
   border-radius:50%;
-  background: url(assets/level_1.png) no-repeat center;
   background-size: 100% auto;
   font-weight:800;
   text-decoration:none;
-  box-shadow: 0 6px 0 rgba(0,0,0,.1);
+  box-shadow: 0px 6px 2px rgba(0,0,0,.1);
+}
+
+/* Standard: alle Levels gesperrt */
+.level {
+  background: url(assets/level_locked.png) no-repeat center / contain;
+}
+
+/* wenn geöffnet */
+.level.opened {
+  background: url(assets/level_opened.png) no-repeat center / contain;
+}
+
+/* wenn heute freigeschaltet (aber noch nicht geöffnet) */
+.level.unlocked {
+  background: url(assets/level_unlocked.png) no-repeat center / contain;
 }
 
 a{
@@ -148,6 +162,24 @@ a{
 .map .level:nth-child(23){ --i:23; }
 .map .level:nth-child(24){ --i:24; }   /* Tag 1 ganz unten */
 
+.day-backdrop {
+  position: fixed;   /* deckt die ganze Seite ab */
+  inset: 0;          /* oben, rechts, unten, links = 0 */
+  width: 100%;
+  height: 100%;
+
+  background: url("assets/backdrop.png") no-repeat top center;
+  background-size: cover;
+
+  z-index: -1;
+}
+.day-content{
+  margin-top: 12rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  height:80%;
+}
+
 /* Footer */
 .site-footer, footer {
   position: fixed;
@@ -161,3 +193,116 @@ a{
 
 /* iOS Tap-Feedback subtil */
 a { -webkit-tap-highlight-color: rgba(0,0,0,0.08); }
+
+.question {
+  padding: 1rem;
+  margin: 1rem 0;
+  color:var(--card);
+  background: rgba(240, 204, 56, 0.75); /* dein accent-gelb, leicht transparent */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  backdrop-filter: blur(2px); /* macht's etwas weicher */
+}
+
+.solution-button {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--card);
+  background: rgba(240, 204, 56, 0.85); /* warmes Gelb, leicht durchsichtig */
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+.solution-button:hover {
+  background: rgba(240, 204, 56, 1);
+}
+
+.solution-button:active {
+  transform: scale(0.96);
+}
+
+.solution-button.correct {
+  background: rgba(6, 83, 8, 0.85);   /* dein var(--color-main-2) grün */
+  color: #fff;
+}
+
+.solution-button.wrong {
+  background: rgba(150, 42, 42, 0.85); /* dein var(--color-main-1) rot */
+  color: #fff;
+}
+
+.back-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: url("assets/icon_3.png") no-repeat center / contain;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* Optional Hover/Active für Touch-Feedback */
+.back-button:active {
+  transform: scale(0.9);
+  filter: brightness(0.9);
+}
+
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-white);
+  background: var(--color-main-1);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.button:active {
+  transform: scale(0.96);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+dialog {
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  background: var(--color-white);
+  color: var(--fg);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  text-align: center;
+  max-width: 300px;
+}
+
+dialog p{
+  padding-bottom: 1rem;
+  color:var(--card);
+}
+
+dialog button{
+  padding: 0.3rem 1rem;
+  text-align: center;
+}
+
+dialog::backdrop {
+  background: rgba(0,0,0,0.5);
+}
