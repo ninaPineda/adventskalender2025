@@ -12,9 +12,6 @@
 
   --bg: var(--color-white);
   --fg: var(--color-black);
-
-  --header-h: 120px;   /* Höhe deines Headers */
-  --footer-h: 40px;    /* wenn du nen Footer willst */
 }
 
 /* System Dark Mode (optional) */
@@ -64,8 +61,8 @@ h1,h2,h3,p{ margin:0; } /* killt kollabierende Margins */
 }
 
 :root{
-  --header-h: 120px;   /* Höhe deines Headers */
-  --footer-h: 40px;    /* wenn du nen Footer willst */
+  --header-h: 8rem;   /* Höhe deines Headers */
+  --footer-h: 2rem;    /* wenn du nen Footer willst */
 }
 
 /* Body ohne Phantom-Abstände */
@@ -92,29 +89,29 @@ main {
 .map{
   position: relative;
   width: 100%;
-  height: 2800px; /* ≈ Höhe deines assets/map.jpg */
-  background: url(assets/map.jpg) no-repeat bottom center;
+  aspect-ratio: 1125 / 7200;
+  background: url(assets/map.jpg) no-repeat top center;
   background-size: 100% auto;
-  overflow: visible; /* wichtig: Buttons dürfen rausgucken */
+  overflow: visible;
 }
 
 /* Schritte: 24 Tage -> 23 Abstände */
 .map{ --steps: 23; }
 
-/* Buttons: links mittig, vertikal berechnet */
-.level{
-  position:absolute;
-  top: calc((var(--i) - 1) * (80% / var(--steps)) + 10%);
+.level {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
   width: 4.8rem;
-  transform: translate(var(--x), var(--y));
-  font-size: xx-large;
   aspect-ratio: 1;
-  display:grid; place-items:center;
-  border-radius:50%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
   background-size: 100% auto;
-  font-weight:800;
-  text-decoration:none;
+  font-weight: 800;
+  text-decoration: none;
   box-shadow: 0px 6px 2px rgba(0,0,0,.1);
+  font-size: xx-large;
 }
 
 /* Standard: alle Levels gesperrt */

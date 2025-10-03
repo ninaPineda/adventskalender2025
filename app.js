@@ -77,6 +77,6 @@ document.querySelectorAll('.level').forEach(level => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  requestAnimationFrame(scrollToToday);
+  //requestAnimationFrame(scrollToToday);
   updateDaysStyle();
 });
