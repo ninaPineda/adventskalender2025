@@ -56,10 +56,12 @@ function updateDaysStyle() {
   // den neuesten (größten) Tag bestimmen
   if (opened.size > 0) {
     const days = Array.from(opened).sort((a, b) => a - b);
-    const latestDay = days[days.length - 1];
+    const latestOpenedDay = days[days.length - 1];
+    const newDay = parseInt(latestOpenedDay) + 1;
 
-    if(latestDay <= todayDay){
-    const newestLevel = document.querySelector(`.level[data-day="${latestDay + 1}"]`);
+    if(latestOpenedDay < todayDay()){
+    const newestLevel = document.querySelector(`.level[data-day="${newDay}"]`);
+    console.log(newDay);
     if (newestLevel) newestLevel.classList.add("unlocked");
   
     }
@@ -77,6 +79,6 @@ document.querySelectorAll('.level').forEach(level => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  //requestAnimationFrame(scrollToToday);
+  requestAnimationFrame(scrollToToday);
   updateDaysStyle();
 });
