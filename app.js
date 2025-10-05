@@ -10,6 +10,7 @@ function currentDate() {
 }
 
 function todayDay(d = currentDate()) {
+  console.log(d.getDate());
   return Math.min(d.getDate(), 24);
 }
 
@@ -42,30 +43,29 @@ function rightSolution(day) {
 }
 
 function updateDaysStyle() {
-  // erst alle Level zurücksetzen
+  const canOpen = todayDay();
+
+  // Reset
   document.querySelectorAll('.level').forEach(level => {
-    level.classList.remove("opened", "unlocked");
+    level.classList.remove('opened', 'unlocked');
   });
 
-  // alle geöffneten als "opened"
-  opened.forEach(day => {
-    const level = document.querySelector(`.level[data-day="${day}"]`);
-    if (level) level.classList.add("opened");
+  // Geöffnete Tage markieren
+  const openedDays = [...opened].map(Number).filter(n => Number.isFinite(n)).sort((a,b)=>a-b);
+  openedDays.forEach(day => {
+    const el = document.querySelector(`.level[data-day="${day}"]`);
+    if (el) el.classList.add('opened');
   });
 
-  // den neuesten (größten) Tag bestimmen
-  if (opened.size > 0) {
-    const days = Array.from(opened).sort((a, b) => a - b);
-    const latestOpenedDay = days[days.length - 1];
-    const newDay = parseInt(latestOpenedDay) + 1;
+  // Nächsten freischalten
+  const maxOpened = openedDays.length ? openedDays[openedDays.length - 1] : 0;
+  const nextDay = Math.min(maxOpened + 1, canOpen);
 
-    if(latestOpenedDay < todayDay()){
-    const newestLevel = document.querySelector(`.level[data-day="${newDay}"]`);
-    console.log(newDay);
-    if (newestLevel) newestLevel.classList.add("unlocked");
-  
-    }
-}
+  // Wenn nextDay nicht bereits geöffnet ist: unlocken
+  if (!opened.has(nextDay)) {
+    const unlockEl = document.querySelector(`.level[data-day="${nextDay}"]`);
+    if (unlockEl) unlockEl.classList.add('unlocked');
+  }
 }
 
 document.querySelectorAll('.level').forEach(level => {
@@ -79,6 +79,9 @@ document.querySelectorAll('.level').forEach(level => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  requestAnimationFrame(scrollToToday);
-  updateDaysStyle();
+  requestAnimationFrame(() => {
+    updateDaysStyle();
+    scrollToToday();
+  });
 });
+window.addEventListener('load', () => setTimeout(updateDaysStyle, 0));
