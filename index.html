@@ -196,14 +196,21 @@
       </div>
       <dialog id="lockedPopup">
         <p>Dieses Türchen ist noch nicht freigeschaltet 🎁</p>
-        <button onclick="document.getElementById('lockedPopup').close()">
+        <button
+          class="normal-button"
+          onclick="document.getElementById('lockedPopup').close()"
+        >
           Okay
         </button>
       </dialog>
     </main>
 
-    <footer class="site-footer">
-      <p>&copy; 2025 – Dein Adventskalender</p>
+    <footer>
+      <nav>
+        <a class="footer-highscore"></a>
+        <a class="footer-today"></a>
+        <a class="footer-help"></a>
+      </nav>
     </footer>
     <script src="app.js"></script>
   </body>

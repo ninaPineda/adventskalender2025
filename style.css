@@ -2,26 +2,13 @@
    Farb-Variablen
    =========================== */
 :root {
-  --color-black: #031021;
-  --color-white: #f9ffff;
+  --color-black: #202521;
+  --color-white: #dceefc;
 
   /* Zwei ähnliche Main-Farben + Akzent */
-  --color-main-1: #962a2a; 
-  --color-main-2: #065308; 
-  --color-accent: #f0cc38; 
-
-  --bg: var(--color-white);
-  --fg: var(--color-black);
-}
-
-/* System Dark Mode (optional) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f1115;
-    --fg: #e9edf3;
-    --card: #151821;
-    --muted: rgba(233,237,243,0.7);
-  }
+  --color-main-1: #cf2f0f; 
+  --color-main-2: #316e23; 
+  --color-accent: #FFD530; 
 }
 
 /* Reset knapp gehalten */
@@ -47,37 +34,34 @@ h1,h2,h3,p{ margin:0; } /* killt kollabierende Margins */
     inset: 0;
     display: grid;
     place-items: center;
-    background: var(--bg);
+    background: var(--color-white);
     z-index: 9999;
   }
   .desktop-blocker p {
     font-size: 18px;
     padding: 16px 20px;
     border-radius: 14px;
-    background: var(--card);
+    background: var(--color-white);
     box-shadow: 0 6px 24px rgba(0,0,0,0.1);
     border: 1px solid rgba(0,0,0,0.06);
   }
-}
-
-:root{
-  --header-h: 8rem;   /* Höhe deines Headers */
-  --footer-h: 2rem;    /* wenn du nen Footer willst */
 }
 
 /* Body ohne Phantom-Abstände */
 html,body{ height:100%; margin:0; }
 h1,h2,h3,p{ margin:0; } /* killt kollabierende Margins */
 
-/* Header sichtbar + PNG unten ausgerichtet */
-.site-header{
-  position: fixed; top:0; left:15%;
-  height: var(--header-h);
-  width: 70%;
-  display: grid; place-items: center;
-  text-align: center; color:#fff;
-  background: url(assets/header.png) no-repeat bottom center / cover;
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 8rem;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  color: var(--color-main-1);
   z-index: 10;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
 main {
@@ -110,8 +94,12 @@ main {
   background-size: 100% auto;
   font-weight: 800;
   text-decoration: none;
-  box-shadow: 0px 6px 2px rgba(0,0,0,.1);
+  box-shadow: 0px 6px 2px rgba(0, 0, 0, .1);
   font-size: xx-large;
+  color: #fff; /* oder was auch immer passt */
+  text-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.3),  /* dunkler Schatten unten */
+    0 -1px 1px rgba(255, 255, 255, 0.4); /* leichter Glanz oben */
 }
 
 /* Standard: alle Levels gesperrt */
@@ -131,6 +119,10 @@ main {
 
 a{
   color: var(--color-white);
+}
+
+h1{
+  color: var(--color-main-1);
 }
 
 /* Index zuweisen: erstes Kind = 24 ganz oben, letztes = 1 ganz unten */
@@ -177,15 +169,50 @@ a{
   height:80%;
 }
 
-/* Footer */
-.site-footer, footer {
+footer, nav {
   position: fixed;
   bottom: 0;
-  text-align: center;
+  left: 0;
+  width: 100%;
+  height: calc(100vw * 0.2412);
+  background: url(assets/footer.png) no-repeat center / contain;
+  display: flex;
+  justify-content: center; /* Buttons bleiben mittig */
   align-items: center;
-  padding: 8px 0 12px;
-  color: var(--muted);
-  font-size: 12px;
+  gap: 3rem;               /* dein gewünschter Abstand */
+  padding: 0 2rem;         /* gleicher Rand links/rechts */
+  z-index: 10;
+  filter: drop-shadow(0 0rem 5rem rgba(0, 21, 45, 0.4));
+}
+
+.footer-help {
+  background: url(assets/info.png) no-repeat center / contain;
+  width: 4rem;      /* oder was zur Bildgröße passt */
+  aspect-ratio: 1;  /* macht ihn quadratisch */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent; /* kein weißer Hintergrund */
+}
+
+.footer-today {
+  background: url(assets/today.png) no-repeat center / contain;
+  width: 4rem;      /* oder was zur Bildgröße passt */
+  aspect-ratio: 1;  /* macht ihn quadratisch */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent; /* kein weißer Hintergrund */
+}
+
+.footer-highscore {
+  background: url(assets/highscore.png) no-repeat center / contain;
+  width: 4rem;      /* oder was zur Bildgröße passt */
+  aspect-ratio: 1;  /* macht ihn quadratisch */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent; /* kein weißer Hintergrund */
 }
 
 /* iOS Tap-Feedback subtil */
@@ -254,7 +281,7 @@ a { -webkit-tap-highlight-color: rgba(0,0,0,0.08); }
   filter: brightness(0.9);
 }
 
-.button {
+.normal-button {
   display: inline-block;
   padding: 0.75rem 1.25rem;
   font-size: 1rem;
