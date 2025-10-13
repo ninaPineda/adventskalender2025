@@ -21,6 +21,14 @@ function scrollToToday({ behavior = 'smooth', block = 'center' } = {}) {
   if (el) el.scrollIntoView({ behavior, block });
 }
 
+function scrollToActive({ behavior = 'smooth', block = 'center' } = {}) {
+  if (!Array.isArray(openedDays)) return;
+  const maxOpened = openedDays.length ? openedDays[openedDays.length - 1] : 0;
+  const id = `day-${maxOpened}`;
+  const el = document.getElementById(id) || document.querySelector(`.level[data-day="${maxOpened}"]`);
+  if (el) el.scrollIntoView({ behavior, block });
+}
+
 function rightSolution(day) {
   if (!opened.has(day)) {
     opened.add(day);
@@ -77,6 +85,9 @@ document.querySelectorAll('.level').forEach(level => {
     }
   });
 });
+
+document.querySelector('.footer-today')
+  .addEventListener('click', scrollToActive);
 
 document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(() => {

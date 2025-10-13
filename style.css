@@ -179,7 +179,7 @@ footer, nav {
   display: flex;
   justify-content: center; /* Buttons bleiben mittig */
   align-items: center;
-  gap: 3rem;               /* dein gewünschter Abstand */
+  gap: 2rem;               /* dein gewünschter Abstand */
   padding: 0 2rem;         /* gleicher Rand links/rechts */
   z-index: 10;
   filter: drop-shadow(0 0rem 5rem rgba(0, 21, 45, 0.4));
@@ -197,9 +197,10 @@ footer, nav {
 
 .footer-today {
   background: url(assets/today.png) no-repeat center / contain;
-  width: 4rem;      /* oder was zur Bildgröße passt */
+  width: 7rem;      /* oder was zur Bildgröße passt */
   aspect-ratio: 1;  /* macht ihn quadratisch */
   border: none;
+  transform: translateY(-1rem);
   padding: 0;
   cursor: pointer;
   background-color: transparent; /* kein weißer Hintergrund */
