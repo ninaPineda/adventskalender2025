@@ -1,8 +1,26 @@
-const LS_KEY = 'advent_opened_v2';
+const LS_KEY = 'advent_opened';
+const LS_KEY_COINS = 'advent_coins';
+
 const opened = new Set(JSON.parse(localStorage.getItem(LS_KEY) || '[]'));
+let coins = Number(localStorage.getItem(LS_KEY_COINS) ?? '0'); // <- kein JSON.parse(0)
 
 function saveOpened() {
   localStorage.setItem(LS_KEY, JSON.stringify([...opened]));
+}
+function saveCoins() {
+  localStorage.setItem(LS_KEY_COINS, String(coins)); // <- keine Spread-Operator-Spielerei
+}
+
+function renderCoins() {
+  const el = document.querySelector('.coins');
+  if (el) el.innerHTML =
+    `<img style="width:2.5rem;aspect-ratio:1;" src="assets/coin.png" alt="Coin"> <span>${coins}</span>`;
+}
+
+function addCoin(amount) {
+  coins=coins+amount;
+  saveCoins();
+  renderCoins();
 }
 
 function currentDate() {
@@ -21,9 +39,12 @@ function scrollToToday({ behavior = 'smooth', block = 'center' } = {}) {
   if (el) el.scrollIntoView({ behavior, block });
 }
 
-function scrollToActive({ behavior = 'smooth', block = 'center' } = {}) {
-  if (!Array.isArray(openedDays)) return;
-  const maxOpened = openedDays.length ? openedDays[openedDays.length - 1] : 0;
+function getOpenedDays() {
+  return [...opened].map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+}
+function scrollToActive({ behavior='smooth', block='center' } = {}) {
+  const ods = getOpenedDays();
+  const maxOpened = ods.length ? ods[ods.length] : 1;
   const id = `day-${maxOpened}`;
   const el = document.getElementById(id) || document.querySelector(`.level[data-day="${maxOpened}"]`);
   if (el) el.scrollIntoView({ behavior, block });
@@ -76,23 +97,24 @@ function updateDaysStyle() {
   }
 }
 
-document.querySelectorAll('.level').forEach(level => {
-  level.addEventListener('click', (e) => {
-    const isUnlocked = level.classList.contains('unlocked') || level.classList.contains('opened');
-    if (!isUnlocked) {
-      e.preventDefault(); // verhindert, dass der Link öffnet
-      document.getElementById('lockedPopup').showModal();
-    }
-  });
-});
-
-document.querySelector('.footer-today')
-  .addEventListener('click', scrollToActive);
-
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.level').forEach(level => {
+    level.addEventListener('click', (e) => {
+      const isUnlocked = level.classList.contains('unlocked') || level.classList.contains('opened');
+      if (!isUnlocked) {
+        e.preventDefault();
+        document.getElementById('lockedPopup')?.showModal();
+      }
+    });
+  });
+
+  document.querySelector('.footer-today')?.addEventListener('click', scrollToToday);
+  renderCoins();
+
   requestAnimationFrame(() => {
     updateDaysStyle();
-    scrollToToday();
+    scrollToActive();
   });
 });
+
 window.addEventListener('load', () => setTimeout(updateDaysStyle, 0));

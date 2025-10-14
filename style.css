@@ -55,13 +55,36 @@ h1,h2,h3,p{ margin:0; } /* killt kollabierende Margins */
   position: fixed;
   top: 0;
   width: 100%;
-  height: 8rem;
+  height: 12rem;
+  padding-left: 0.5rem;
+  padding-right: 1rem;
   display: grid;
-  align-items: center;
-  text-align: center;
+  grid-gap: 0.3rem;
+  grid-template-columns: repeat(4, 1fr); /* vier gleich breite Spalten */
+  align-items: center;                    /* vertikal zentrieren */
+  justify-items: center;                  /* horizontal zentrieren */
   color: var(--color-main-1);
   z-index: 10;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+background: linear-gradient(
+  to bottom,
+  var(--color-white) 0%,
+  var(--color-white) 50%, 
+  rgba(255, 255, 255, 0) 100% 
+);
+}
+
+.adventskalender{
+  transform: translateY(-3.1rem);
+  grid-column: span 3;
+  font-size: 1.8rem;
+}
+
+.coins{
+  transform: translateY(-3rem);
+  font-size: larger;
+display: flex;
+flex-direction: row;
+align-items: center;
 }
 
 main {
