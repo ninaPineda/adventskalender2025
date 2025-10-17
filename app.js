@@ -2,25 +2,34 @@ const LS_KEY = 'advent_opened';
 const LS_KEY_COINS = 'advent_coins';
 
 const opened = new Set(JSON.parse(localStorage.getItem(LS_KEY) || '[]'));
-let coins = Number(localStorage.getItem(LS_KEY_COINS) ?? '0'); // <- kein JSON.parse(0)
+let coins = new Number(localStorage.getItem(LS_KEY_COINS) ?? '9');
 
 function saveOpened() {
   localStorage.setItem(LS_KEY, JSON.stringify([...opened]));
 }
 function saveCoins() {
-  localStorage.setItem(LS_KEY_COINS, String(coins)); // <- keine Spread-Operator-Spielerei
+  localStorage.setItem(LS_KEY_COINS, String(coins));
 }
 
 function renderCoins() {
   const el = document.querySelector('.coins');
   if (el) el.innerHTML =
-    `<img style="width:2.5rem;aspect-ratio:1;" src="assets/coin.png" alt="Coin"> <span>${coins}</span>`;
+    `<a href="coins.html"><img style="width:2.5rem;aspect-ratio:1;" src="assets/coin.png" alt="Coin"></a> <span>${coins}</span>`;
 }
 
-function addCoin(amount) {
-  coins=coins+amount;
+function addCoin() {
+  coins++;
   saveCoins();
   renderCoins();
+}
+
+function substractCoin() {
+  if(coins>0){
+  coins--;
+  saveCoins();
+  renderCoins();
+  }
+
 }
 
 function currentDate() {
@@ -109,6 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.querySelector('.footer-today')?.addEventListener('click', scrollToToday);
+    document.querySelector('.coin-button')?.addEventListener('click', addCoin);
+        document.querySelector('.less-coin-button')?.addEventListener('click', substractCoin);
   renderCoins();
 
   requestAnimationFrame(() => {
