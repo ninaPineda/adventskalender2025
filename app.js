@@ -41,22 +41,9 @@ function todayDay(d = currentDate()) {
   return Math.min(d.getDate(), 24);
 }
 
-function scrollToToday({ behavior = 'smooth', block = 'center' } = {}) {
-  const d = todayDay();
-  const id = `day-${String(d)}`;
-  const el = document.getElementById(id) || document.querySelector(`.level[data-day="${d}"]`);
-  if (el) el.scrollIntoView({ behavior, block });
-}
 
 function getOpenedDays() {
   return [...opened].map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
-}
-function scrollToActive({ behavior='smooth', block='center' } = {}) {
-  const ods = getOpenedDays();
-  const maxOpened = ods.length ? ods[ods.length] : 1;
-  const id = `day-${maxOpened}`;
-  const el = document.getElementById(id) || document.querySelector(`.level[data-day="${maxOpened}"]`);
-  if (el) el.scrollIntoView({ behavior, block });
 }
 
 function rightSolution(day) {
@@ -80,31 +67,80 @@ function rightSolution(day) {
   }, 2000);
 }
 
-function updateDaysStyle() {
-  const canOpen = todayDay();
+/* ===== Häuser-Carousel ===== */
 
-  // Reset
-  document.querySelectorAll('.level').forEach(level => {
-    level.classList.remove('opened', 'unlocked');
-  });
+/** Anzahl & Pfadschema deiner Haus-Bilder */
+const HOUSE_COUNT = 24;
+const houseSrc = (i) => `assets/houses/haus-${String(i).padStart(2, '0')}.png`;
 
-  // Geöffnete Tage markieren
-  const openedDays = [...opened].map(Number).filter(n => Number.isFinite(n)).sort((a,b)=>a-b);
-  openedDays.forEach(day => {
-    const el = document.querySelector(`.level[data-day="${day}"]`);
-    if (el) el.classList.add('opened');
-  });
+/** State */
+let houseIndex = 1; // Start bei Haus 1
 
-  // Nächsten freischalten
-  const maxOpened = openedDays.length ? openedDays[openedDays.length - 1] : 0;
-  const nextDay = Math.min(maxOpened + 1, canOpen);
+/** DOM refs */
+const beltEl  = document.querySelector('.belt');
+const imgL    = document.querySelector('.house.left');
+const imgM    = document.querySelector('.house.main');
+const imgR    = document.querySelector('.house.right');
+const btnPrev = document.querySelector('.nav-prev');
+const btnNext = document.querySelector('.nav-next');
+const linkM  = document.querySelector('.house-link');
 
-  // Wenn nextDay nicht bereits geöffnet ist: unlocken
-  if (!opened.has(nextDay)) {
-    const unlockEl = document.querySelector(`.level[data-day="${nextDay}"]`);
-    if (unlockEl) unlockEl.classList.add('unlocked');
+/** Hilfen */
+function setImg(el, idx){
+  if (idx < 1 || idx > HOUSE_COUNT) {
+    el.removeAttribute('src'); el.setAttribute('alt','');
+    el.style.visibility = 'hidden';
+  } else {
+    el.src = houseSrc(idx);
+    el.alt = `Haus ${idx}`;
+    el.style.visibility = 'visible';
   }
 }
+
+function updateCarousel(){
+  // Nachbarn setzen
+  setImg(imgL, houseIndex - 1);
+  setImg(imgM, houseIndex);
+  setImg(imgR, houseIndex + 1);
+
+  // Link anpassen
+linkM.href = `/tage/${String(houseIndex).padStart(2, '0')}.html`;
+
+  // Pfeile ein-/ausblenden
+  btnPrev.toggleAttribute('disabled', houseIndex === 1);
+  btnNext.toggleAttribute('disabled', houseIndex === HOUSE_COUNT);
+
+  // Belt wieder auf Mitte
+  beltEl.classList.remove('anim-left','anim-right');
+  // Force reflow, falls direkt erneut geklickt wurde
+  // eslint-disable-next-line no-unused-expressions
+  beltEl.offsetHeight;
+}
+
+function go(dir){
+  // Bounds check
+  if ((dir === 1 && houseIndex >= HOUSE_COUNT) || (dir === -1 && houseIndex <= 1)) return;
+
+  // Animation starten
+  beltEl.classList.add(dir === 1 ? 'anim-right' : 'anim-left');
+
+  // Nach Ende der Transition Index verschieben, Bilder neu setzen, Belt resetten
+  const onDone = () => {
+    beltEl.removeEventListener('transitionend', onDone, { once: true });
+    houseIndex += dir;
+    updateCarousel();
+  };
+  beltEl.addEventListener('transitionend', onDone, { once: true });
+}
+
+/** Events */
+btnPrev?.addEventListener('click', () => go(-1));
+btnNext?.addEventListener('click', () => go(1));
+
+/** Init nach deinem bisherigen DOMContentLoaded-Setup */
+document.addEventListener('DOMContentLoaded', () => {
+  updateCarousel();
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.level').forEach(level => {
