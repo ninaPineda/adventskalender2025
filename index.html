@@ -7,8 +7,16 @@
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
     <title>Adventskalender</title>
-    <link rel="stylesheet" href="style.css" />
     <meta name="theme-color" content="#000000" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <link
+      rel="preload"
+      href="assets/backdrop.png"
+      as="image"
+      imagesrcset="assets/backdrop.png"
+    />
   </head>
 
   <body>
@@ -19,22 +27,23 @@
 
     <header class="site-header">
       <h1 class="adventskalender">Adventskalender</h1>
-      <div class="coins"></div>
+      <div class="coins" aria-live="polite"></div>
     </header>
 
-    <div class="street" aria-live="polite">
+    <!-- Häuser-Slider -->
+    <section class="street" aria-live="polite">
       <button class="nav nav-prev" aria-label="Vorheriges Haus"></button>
 
       <div class="belt">
         <img class="house left" alt="" />
-        <a class="house-link" href="#">
+        <a class="house-link level" href="#">
           <img class="house main" alt="" />
         </a>
         <img class="house right" alt="" />
       </div>
 
       <button class="nav nav-next" aria-label="Nächstes Haus"></button>
-    </div>
+    </section>
 
     <main>
       <dialog id="lockedPopup">
@@ -49,12 +58,22 @@
     </main>
 
     <footer>
-      <nav>
-        <a class="footer-highscore"></a>
-        <button class="footer-today"></button>
-        <a href="info.html" class="footer-help"></a>
+      <nav class="footer-nav" aria-label="Navigation">
+        <a
+          class="footer-highscore"
+          href="highscore.html"
+          aria-label="Highscore"
+        ></a>
+
+        <button
+          class="footer-today"
+          type="button"
+          aria-label="Heutiges Türchen"
+        ></button>
+
+        <a href="info.html" class="footer-help" aria-label="Hilfe & Story"></a>
       </nav>
     </footer>
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
   </body>
 </html>

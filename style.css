@@ -129,61 +129,97 @@ footer, nav{
    Häuser
    =========================== */
 /* --- Häuser Slider --- */
-.street{
-  position: fixed; inset: 0 0 auto 0; /* oben unter deinem Header */
-  top: 4rem;                          /* Höhe deines Headers aus der Seite */
-  height: 100%;
-  grid-template-columns: 4rem 1fr 4rem;
+.street {
+  position: fixed;
+  top: 6rem;       /* etwas Abstand unter dem Header */
+  left: 0;
+  right: 0;
+  bottom: calc(20vw + 3rem); /* über Footer */
+  display: flex;
+  justify-content: center;
   align-items: center;
-  z-index: 1;
   overflow: hidden;
+  z-index: 1;
 }
 
 .street .nav{
-  z-index: 10;
-  width: 3rem; height: 3rem; border: none; background: transparent; cursor: pointer;
+  z-index:10;
+  width:3rem;
+  height:3rem;
+  border:none;
+  background: transparent;
+  cursor:pointer;
   filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
   transition: transform .12s ease, filter .12s ease, opacity .12s ease;
 }
 .street .nav:active{ transform: translateY(2px) scale(.98); }
 .street .nav[disabled]{ opacity:.35; pointer-events:none; filter:none; }
-
 .nav-prev{position:fixed; left:1rem; top:50%; background: url(assets/icon_3.png) no-repeat center/contain; }
 .nav-next{position:fixed; right:1rem; top:50%; background: url(assets/icon_2.png) no-repeat center/contain; }
 
-/* Belt zeigt immer drei Panels (links / mitte / rechts) */
-.belt{
-  width: 300%;
-  height: 60%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  transform: translateX(-33.3333%); /* Mitte sichtbar */
-  transition: transform .35s ease;
+/* Bühne für die 3 Häuser */
+.belt {
+  position: relative;
+  width: 100%;
+  height: 60vh;           /* Höhe vom sichtbaren Bereich für Häuser */
+  max-height: 420px;      /* optional, damit's nicht riesig wird auf großen Phones */
+  pointer-events: none;   /* wir aktivieren pointer nur auf dem middle-Haus */
 }
 
-/* Animationszustände: rechts klicken -> nach links schieben (Mitte -> rechts) */
-.belt.anim-right{ transform: translateX(-400px); z-index: 500;}
-/* links klicken -> nach rechts schieben (Mitte -> links) */
-.belt.anim-left{  transform: translateX(0%); }
-
-.house{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;        /* Haus bleibt korrekt skaliert */
-  image-rendering: auto;
+/* generelles Hausbild */
+.house {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;             /* Main-Größe */
+  max-width: 320px;
+  height: auto;
+  transform-origin: center center;
+  object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
+  transition: transform .25s ease;
 }
 
-.house-link {
-  display: block;
-  width: 100%;
-  height: 100%;
+/* Mittleres Haus (aktives) */
+.house.main {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  z-index: 3;
+  pointer-events: auto;
 }
-.house-link img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+
+/* Linkes Nachbarhaus */
+.house.left {
+    transform: translate(calc(-50% - 45vw), -50%);
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Rechtes Nachbarhaus */
+.house.right {
+  transform: translate(calc(-50% + 45vw), -50%);
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Wenn es kein Nachbarhaus gibt (Anfang / Ende), blenden wir einfach aus */
+.house.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.house-link{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.house-link img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
 }
 
 /* ===========================
@@ -216,13 +252,17 @@ footer, nav{
 .btn-red{ background: var(--grad-main-1); }
 .btn-green{ background: var(--grad-main-2); }
 
-/* Mapping deiner alten Klassen */
-.solution-button{ composes: btn btn-accent; } /* falls CSS Modules nicht, dann dupliziere: */
-.solution-button{ display:block; width:100%; margin:.5rem 0; padding:.5rem 1rem; font-size:1rem; font-weight:700; border-radius:25px; border:none; cursor:pointer; background:var(--grad-accent); color:#3b2b00; box-shadow:var(--elev-1); }
-.solution-button:hover{ filter: brightness(1.05); }
-.solution-button:active{ transform: translateY(2px) scale(.98); }
-.solution-button.correct{ background: var(--grad-main-2); color:#fff; }
-.solution-button.wrong{ background: var(--grad-main-1); color:#fff; }
+.solution-button:active{
+  transform: translateY(2px) scale(.98);
+}
+.solution-button.correct{
+  background: var(--grad-main-2);
+  color:#fff;
+}
+.solution-button.wrong{
+  background: var(--grad-main-1);
+  color:#fff;
+}
 
 .normal-button, .coin-button, .less-coin-button{
   display:inline-block; padding:.75rem 1.25rem; font-size:1rem; font-weight:600; color:#fff;

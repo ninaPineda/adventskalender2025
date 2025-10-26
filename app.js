@@ -41,10 +41,12 @@ function todayDay(d = currentDate()) {
   return Math.min(d.getDate(), 24);
 }
 
-
 function getOpenedDays() {
   return [...opened].map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
 }
+
+function updateDaysStyle(){ /* später echte Logik; jetzt leer damit nix crasht */ }
+function scrollToToday(){ houseIndex = todayDay(); updateCarousel(); }
 
 function rightSolution(day) {
   if (!opened.has(day)) {
@@ -67,85 +69,80 @@ function rightSolution(day) {
   }, 2000);
 }
 
-/* ===== Häuser-Carousel ===== */
+/* ===== Häuser-Carousel (Focus-Center mit Teasern) ===== */
 
-/** Anzahl & Pfadschema deiner Haus-Bilder */
 const HOUSE_COUNT = 24;
-const houseSrc = (i) => `assets/houses/haus-${String(i).padStart(2, '0')}.png`;
+const houseSrc = (i) =>
+  `assets/houses/${String(i)}.png`;
 
-/** State */
 let houseIndex = 1; // Start bei Haus 1
 
-/** DOM refs */
-const beltEl  = document.querySelector('.belt');
+// DOM Refs
 const imgL    = document.querySelector('.house.left');
 const imgM    = document.querySelector('.house.main');
 const imgR    = document.querySelector('.house.right');
 const btnPrev = document.querySelector('.nav-prev');
 const btnNext = document.querySelector('.nav-next');
-const linkM  = document.querySelector('.house-link');
+const linkM   = document.querySelector('.house-link');
 
-/** Hilfen */
-function setImg(el, idx){
+function applyImg(el, idx) {
+  if (!el) return;
+
   if (idx < 1 || idx > HOUSE_COUNT) {
-    el.removeAttribute('src'); el.setAttribute('alt','');
-    el.style.visibility = 'hidden';
+    el.removeAttribute('src');
+    el.setAttribute('alt', '');
+    el.classList.add('is-hidden');
   } else {
     el.src = houseSrc(idx);
     el.alt = `Haus ${idx}`;
-    el.style.visibility = 'visible';
+    el.classList.remove('is-hidden');
   }
 }
 
-function updateCarousel(){
+function updateCarousel() {
   // Nachbarn setzen
-  setImg(imgL, houseIndex - 1);
-  setImg(imgM, houseIndex);
-  setImg(imgR, houseIndex + 1);
+  applyImg(imgL, houseIndex - 1);
+  applyImg(imgM, houseIndex);
+  applyImg(imgR, houseIndex + 1);
 
-  // Link anpassen
-linkM.href = `/tage/${String(houseIndex).padStart(2, '0')}.html`;
+  // Link für aktives Haus setzen
+  if (linkM) {
+    linkM.href = `tage/${String(houseIndex).padStart(2, '0')}.html`;
+  }
 
-  // Pfeile ein-/ausblenden
-  btnPrev.toggleAttribute('disabled', houseIndex === 1);
-  btnNext.toggleAttribute('disabled', houseIndex === HOUSE_COUNT);
+  // Pfeile sperren falls kein prev/next
+  if (btnPrev) {
+    btnPrev.toggleAttribute('disabled', houseIndex === 1);
+  }
+  if (btnNext) {
+    btnNext.toggleAttribute('disabled', houseIndex === HOUSE_COUNT);
+  }
 
-  // Belt wieder auf Mitte
-  beltEl.classList.remove('anim-left','anim-right');
-  // Force reflow, falls direkt erneut geklickt wurde
-  // eslint-disable-next-line no-unused-expressions
-  beltEl.offsetHeight;
+  // locked/unlocked styling aktualisieren etc.
+  updateDaysStyle();
 }
 
-function go(dir){
-  // Bounds check
-  if ((dir === 1 && houseIndex >= HOUSE_COUNT) || (dir === -1 && houseIndex <= 1)) return;
-
-  // Animation starten
-  beltEl.classList.add(dir === 1 ? 'anim-right' : 'anim-left');
-
-  // Nach Ende der Transition Index verschieben, Bilder neu setzen, Belt resetten
-  const onDone = () => {
-    beltEl.removeEventListener('transitionend', onDone, { once: true });
-    houseIndex += dir;
+/* Button-Klick Logik */
+function go(dir) {
+  if (dir === -1 && houseIndex > 1) {
+    houseIndex -= 1;
     updateCarousel();
-  };
-  beltEl.addEventListener('transitionend', onDone, { once: true });
+  }
+  if (dir === 1 && houseIndex < HOUSE_COUNT) {
+    houseIndex += 1;
+    updateCarousel();
+  }
 }
 
-/** Events */
-btnPrev?.addEventListener('click', () => go(-1));
-btnNext?.addEventListener('click', () => go(1));
-
-/** Init nach deinem bisherigen DOMContentLoaded-Setup */
 document.addEventListener('DOMContentLoaded', () => {
-  updateCarousel();
-});
+  btnPrev?.addEventListener('click', () => go(-1));
+  btnNext?.addEventListener('click', () => go(1));
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.level').forEach(level => {
+  // Lock-Check beim Klicken aufs mittlere Haus
+  document.querySelectorAll('.level').forEach((level) => {
     level.addEventListener('click', (e) => {
-      const isUnlocked = level.classList.contains('unlocked') || level.classList.contains('opened');
+      const isUnlocked = level.classList.contains('unlocked') ||
+                         level.classList.contains('opened');
       if (!isUnlocked) {
         e.preventDefault();
         document.getElementById('lockedPopup')?.showModal();
@@ -153,14 +150,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document.querySelector('.footer-today')?.addEventListener('click', scrollToToday);
-    document.querySelector('.coin-button')?.addEventListener('click', addCoin);
-        document.querySelector('.less-coin-button')?.addEventListener('click', substractCoin);
+  document.querySelector('.footer-today')
+    ?.addEventListener('click', scrollToToday);
+
+  document.querySelector('.coin-button')
+    ?.addEventListener('click', addCoin);
+
+  document.querySelector('.less-coin-button')
+    ?.addEventListener('click', substractCoin);
+
   renderCoins();
 
   requestAnimationFrame(() => {
-    updateDaysStyle();
-    scrollToActive();
+    // Start auf heutigem Tag wäre nice, aber wir lassen erstmal houseIndex so wie gesetzt
+    updateCarousel();
   });
 });
 
