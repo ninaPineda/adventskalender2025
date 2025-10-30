@@ -138,9 +138,9 @@ footer, nav{
 .street{
   padding: 0 var(--peek);
   overflow: hidden;
-  position: fixed; top: 6rem; width: 100%; height: 75%;
+  position: fixed; top:0; width: 100%; height: 100%;
   display: flex; align-items: center;
-  background-color: #cf2f0f;      /* dein roter BG war nur zum Debuggen */
+  background-color: #5bb53d;
 }
 
 /* Reihe der Slides */
@@ -148,15 +148,27 @@ footer, nav{
   display: flex;
   transition: transform .3s ease;
   will-change: transform;
+  height: 100%;
+  width: auto;
 }
 
 /* Einzelnes "Slide": Link um's Bild herum (du hast <a class="house">…) */
-.house{ flex: 0 0 var(--slide); }
-.house img{ width: 100%; height: auto; display: block; user-select: none; -webkit-user-drag: none; }
+.house{ flex: 0 0 var(--slide);   transform: scale(1.1);}
+.house img{ width: 100%; height: 100%; display: block; user-select: none; -webkit-user-drag: none; }
 
 /* Pfeile bleiben wie gehabt */
-.arrow{ position:absolute; top:50%; transform:translateY(-50%); font-size:2rem; background:none; border:none; color:#333; cursor:pointer; }
-.arrow.left{ left: .5rem; }
+.arrow {
+  position: absolute;
+  z-index: 999;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 6rem;
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  cursor: pointer;
+  text-shadow: 0 0px 25px rgba(0, 0, 0, 0.8);
+}.arrow.left{ left: .5rem; }
 .arrow.right{ right: .5rem; }
 .arrow:disabled{ opacity:.3; cursor: default; }
 

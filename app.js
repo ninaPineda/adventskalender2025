@@ -1,8 +1,12 @@
 const LS_KEY = 'advent_opened';
 const LS_KEY_COINS = 'advent_coins';
-
+const images = document.querySelector('.houses');
+const total = document.querySelectorAll('.houses img').length;
+const leftArrow = document.querySelector('.arrow.left');
+const rightArrow = document.querySelector('.arrow.right');
 const opened = new Set(JSON.parse(localStorage.getItem(LS_KEY) || '[]'));
 let coins = new Number(localStorage.getItem(LS_KEY_COINS) ?? '9');
+let currentIndex = 1;
 
 function saveOpened() {
   localStorage.setItem(LS_KEY, JSON.stringify([...opened]));
@@ -36,7 +40,6 @@ function currentDate() {
 }
 
 function todayDay(d = currentDate()) {
-  console.log(d.getDate());
   return Math.min(d.getDate(), 24);
 }
 
@@ -49,8 +52,6 @@ function rightSolution(day) {
     opened.add(day);
     saveOpened();
   }
-
-updateGallery();
 
   // Konfetti-Effekt (rot/grün)
   confetti({
@@ -65,30 +66,28 @@ updateGallery();
   }, 1000);
 }
 
-  let currentIndex = 0;
-const images = document.querySelector('.houses');
-const total = document.querySelectorAll('.houses img').length;
-const leftArrow = document.querySelector('.arrow.left');
-const rightArrow = document.querySelector('.arrow.right');
+function scrollToToday(){
+  currentIndex = todayDay();
+  updateGallery();
+}
 
 function updateGallery() {
   images.style.transform = `translateX(-${currentIndex * 100}%)`;
-  leftArrow.disabled = currentIndex === 0;
-  rightArrow.disabled = currentIndex === total - 1;
+  leftArrow.disabled = currentIndex === 1;
+  rightArrow.disabled = currentIndex === total - 2;
 }
 
 function nextImage() {
-  if (currentIndex < total - 1) currentIndex++;
+  if (currentIndex < total - 2) currentIndex++;
   updateGallery();
 }
 
 function prevImage() {
-  if (currentIndex > 0) currentIndex--;
+  if (currentIndex > 1) currentIndex--;
   updateGallery();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-
 
   document.querySelector('.footer-today')
     ?.addEventListener('click', scrollToToday);
@@ -100,5 +99,5 @@ document.addEventListener('DOMContentLoaded', () => {
     ?.addEventListener('click', substractCoin);
 
   renderCoins();
-
+  updateGallery();
 });
