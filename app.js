@@ -29,7 +29,6 @@ function substractCoin() {
   saveCoins();
   renderCoins();
   }
-
 }
 
 function currentDate() {
@@ -45,15 +44,13 @@ function getOpenedDays() {
   return [...opened].map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
 }
 
-function updateDaysStyle(){ /* später echte Logik; jetzt leer damit nix crasht */ }
-function scrollToToday(){ houseIndex = todayDay(); updateCarousel(); }
-
 function rightSolution(day) {
   if (!opened.has(day)) {
     opened.add(day);
     saveOpened();
-    updateDaysStyle();
   }
+
+updateGallery();
 
   // Konfetti-Effekt (rot/grün)
   confetti({
@@ -63,92 +60,35 @@ function rightSolution(day) {
     colors: ['#962a2a', '#065308'] // deine Main-Farben
   });
 
-  // nach 2 Sekunden zurück zur Startseite
   setTimeout(() => {
     window.location.href = "../index.html";
-  }, 2000);
+  }, 1000);
 }
 
-/* ===== Häuser-Carousel (Focus-Center mit Teasern) ===== */
+  let currentIndex = 0;
+const images = document.querySelector('.houses');
+const total = document.querySelectorAll('.houses img').length;
+const leftArrow = document.querySelector('.arrow.left');
+const rightArrow = document.querySelector('.arrow.right');
 
-const HOUSE_COUNT = 24;
-const houseSrc = (i) =>
-  `assets/houses/${String(i)}.png`;
-
-let houseIndex = 1; // Start bei Haus 1
-
-// DOM Refs
-const imgL    = document.querySelector('.house.left');
-const imgM    = document.querySelector('.house.main');
-const imgR    = document.querySelector('.house.right');
-const btnPrev = document.querySelector('.nav-prev');
-const btnNext = document.querySelector('.nav-next');
-const linkM   = document.querySelector('.house-link');
-
-function applyImg(el, idx) {
-  if (!el) return;
-
-  if (idx < 1 || idx > HOUSE_COUNT) {
-    el.removeAttribute('src');
-    el.setAttribute('alt', '');
-    el.classList.add('is-hidden');
-  } else {
-    el.src = houseSrc(idx);
-    el.alt = `Haus ${idx}`;
-    el.classList.remove('is-hidden');
-  }
+function updateGallery() {
+  images.style.transform = `translateX(-${currentIndex * 100}%)`;
+  leftArrow.disabled = currentIndex === 0;
+  rightArrow.disabled = currentIndex === total - 1;
 }
 
-function updateCarousel() {
-  // Nachbarn setzen
-  applyImg(imgL, houseIndex - 1);
-  applyImg(imgM, houseIndex);
-  applyImg(imgR, houseIndex + 1);
-
-  // Link für aktives Haus setzen
-  if (linkM) {
-    linkM.href = `tage/${String(houseIndex).padStart(2, '0')}.html`;
-  }
-
-  // Pfeile sperren falls kein prev/next
-  if (btnPrev) {
-    btnPrev.toggleAttribute('disabled', houseIndex === 1);
-  }
-  if (btnNext) {
-    btnNext.toggleAttribute('disabled', houseIndex === HOUSE_COUNT);
-  }
-
-  // locked/unlocked styling aktualisieren etc.
-  updateDaysStyle();
+function nextImage() {
+  if (currentIndex < total - 1) currentIndex++;
+  updateGallery();
 }
 
-/* Button-Klick Logik */
-function go(dir) {
-  if (dir === -1 && houseIndex > 1) {
-    houseIndex -= 1;
-    updateCarousel();
-  }
-  if (dir === 1 && houseIndex < HOUSE_COUNT) {
-    houseIndex += 1;
-    updateCarousel();
-  }
+function prevImage() {
+  if (currentIndex > 0) currentIndex--;
+  updateGallery();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  btnPrev?.addEventListener('click', () => go(-1));
-  btnNext?.addEventListener('click', () => go(1));
 
-  // Lock-Check beim Klicken aufs mittlere Haus
-  document.querySelectorAll('.level').forEach((level) => {
-    level.addEventListener('click', (e) => {
-      const isUnlocked = level.classList.contains('unlocked') ||
-                         level.classList.contains('opened');
-      if (!isUnlocked) {
-        e.preventDefault();
-        document.getElementById('lockedPopup')?.showModal();
-      }
-    });
-  });
 
   document.querySelector('.footer-today')
     ?.addEventListener('click', scrollToToday);
@@ -161,10 +101,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderCoins();
 
-  requestAnimationFrame(() => {
-    // Start auf heutigem Tag wäre nice, aber wir lassen erstmal houseIndex so wie gesetzt
-    updateCarousel();
-  });
 });
-
-window.addEventListener('load', () => setTimeout(updateDaysStyle, 0));

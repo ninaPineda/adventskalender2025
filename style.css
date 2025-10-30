@@ -128,99 +128,37 @@ footer, nav{
 /* ===========================
    Häuser
    =========================== */
-/* --- Häuser Slider --- */
-.street {
-  position: fixed;
-  top: 6rem;       /* etwas Abstand unter dem Header */
-  left: 0;
-  right: 0;
-  bottom: calc(20vw + 3rem); /* über Footer */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Galerie-Variablen */
+:root{
+  --slide: 70vw;  /* Breite des aktiven Bilds */
+  --peek: 15vw;   /* sichtbarer Rand links/rechts */
+}
+
+/* Bühne mit Padding, damit die Nachbarn "reinpeeken" */
+.street{
+  padding: 0 var(--peek);
   overflow: hidden;
-  z-index: 1;
+  position: fixed; top: 6rem; width: 100%; height: 75%;
+  display: flex; align-items: center;
+  background-color: #cf2f0f;      /* dein roter BG war nur zum Debuggen */
 }
 
-.street .nav{
-  z-index:10;
-  width:3rem;
-  height:3rem;
-  border:none;
-  background: transparent;
-  cursor:pointer;
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
-  transition: transform .12s ease, filter .12s ease, opacity .12s ease;
-}
-.street .nav:active{ transform: translateY(2px) scale(.98); }
-.street .nav[disabled]{ opacity:.35; pointer-events:none; filter:none; }
-.nav-prev{position:fixed; left:1rem; top:50%; background: url(assets/icon_3.png) no-repeat center/contain; }
-.nav-next{position:fixed; right:1rem; top:50%; background: url(assets/icon_2.png) no-repeat center/contain; }
-
-/* Bühne für die 3 Häuser */
-.belt {
-  position: relative;
-  width: 100%;
-  height: 60vh;           /* Höhe vom sichtbaren Bereich für Häuser */
-  max-height: 420px;      /* optional, damit's nicht riesig wird auf großen Phones */
-  pointer-events: none;   /* wir aktivieren pointer nur auf dem middle-Haus */
+/* Reihe der Slides */
+.houses{
+  display: flex;
+  transition: transform .3s ease;
+  will-change: transform;
 }
 
-/* generelles Hausbild */
-.house {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 70%;             /* Main-Größe */
-  max-width: 320px;
-  height: auto;
-  transform-origin: center center;
-  object-fit: contain;
-  user-select: none;
-  -webkit-user-drag: none;
-  transition: transform .25s ease;
-}
+/* Einzelnes "Slide": Link um's Bild herum (du hast <a class="house">…) */
+.house{ flex: 0 0 var(--slide); }
+.house img{ width: 100%; height: auto; display: block; user-select: none; -webkit-user-drag: none; }
 
-/* Mittleres Haus (aktives) */
-.house.main {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-  z-index: 3;
-  pointer-events: auto;
-}
-
-/* Linkes Nachbarhaus */
-.house.left {
-    transform: translate(calc(-50% - 45vw), -50%);
-
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Rechtes Nachbarhaus */
-.house.right {
-  transform: translate(calc(-50% + 45vw), -50%);
-
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Wenn es kein Nachbarhaus gibt (Anfang / Ende), blenden wir einfach aus */
-.house.is-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.house-link{
-  display:block;
-  width:100%;
-  height:100%;
-}
-.house-link img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
+/* Pfeile bleiben wie gehabt */
+.arrow{ position:absolute; top:50%; transform:translateY(-50%); font-size:2rem; background:none; border:none; color:#333; cursor:pointer; }
+.arrow.left{ left: .5rem; }
+.arrow.right{ right: .5rem; }
+.arrow:disabled{ opacity:.3; cursor: default; }
 
 /* ===========================
    Question Card (glas + gelb)
