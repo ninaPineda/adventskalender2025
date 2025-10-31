@@ -17,8 +17,18 @@ function saveCoins() {
 
 function renderCoins() {
   const el = document.querySelector('.coins');
-  if (el) el.innerHTML =
-    `<a href="coins.html"><img style="width:2.5rem;aspect-ratio:1;" src="assets/coin.png" alt="Coin"></a> <span>${coins}</span>`;
+  if (!el) return;
+
+  // prüfen, ob wir im Unterordner "tage" sind
+  const inTage = window.location.pathname.includes('/tage/');
+  const prefix = inTage ? '../' : '';
+
+  el.innerHTML = `
+    <a href="${prefix}coins.html">
+      <img style="width:2.5rem;aspect-ratio:1;" src="${prefix}assets/coin.png" alt="Coin">
+    </a>
+    <span>${coins}</span>
+  `;
 }
 
 function addCoin() {
@@ -88,8 +98,32 @@ function prevImage() {
   updateGallery();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// Sperre Häuser, die noch nicht freigeschaltet sind
+function lockFutureDays() {
+  const links = document.querySelectorAll('.houses a');
+  const today = todayDay();
+  const openedDays = getOpenedDays();
 
+  links.forEach(link => {
+    const match = link.href.match(/tage\/(\d+)\.html/);
+    if (!match) return;
+
+    const day = parseInt(match[1]);
+    const prevDayUnlocked = day === 1 || openedDays.includes(day - 1);
+
+    // Tag darf geöffnet werden, wenn heutiges Datum >= Tag und vorheriger Tag geschafft ist
+    if (day > today || !prevDayUnlocked) {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('lockedPopup').showModal();
+      });
+      link.style.filter = 'grayscale(0.7) brightness(0.6)';
+      link.style.pointerEvents = 'auto'; // Damit Klick noch Popup auslöst
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.footer-today')
     ?.addEventListener('click', scrollToToday);
 
@@ -101,4 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderCoins();
   updateGallery();
+  lockFutureDays();
 });
+
