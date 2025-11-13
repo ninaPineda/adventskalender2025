@@ -57,6 +57,33 @@ function getOpenedDays() {
   return [...opened].map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
 }
 
+function openHint() {
+  if (coins > 0){
+  substractCoin();
+  const dlg = document.getElementById('hintDialog');
+  dlg?.showModal();
+  } else {
+  const dlg = document.getElementById('noCoinsDialog');
+  dlg?.showModal();
+  }
+}
+
+function closeNoCoinsDialog() {
+  const dlg = document.getElementById('noCoinsDialog');
+  dlg?.close();
+}
+
+function closeHint() {
+  const dlg = document.getElementById('hintDialog');
+  dlg?.close();
+}
+
+function wrongSolution(){
+  const el = document.querySelector('.day-content');
+  el.classList.add('glitch');
+  setTimeout(() => el.classList.remove('glitch'), 200);
+}
+
 function rightSolution(day) {
   if (!opened.has(day)) {
     opened.add(day);
@@ -77,8 +104,7 @@ function rightSolution(day) {
 }
 
 function scrollToToday(){
-  //currentIndex = todayDay();
-  currentIndex =  5;
+  currentIndex = todayDay();
   updateGallery();
 }
 

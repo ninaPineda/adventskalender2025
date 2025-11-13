@@ -118,8 +118,8 @@ main{ top:0; z-index:0; }
 }
 
 /* Content spacing */
-.day-content{ margin:12rem 1rem 0; height:80%; }
-.info-content{ margin:8rem 1rem 0; height:80%; }
+.day-content, .info-content{ margin:6rem 1rem 0; height:80%; }
+
 
 
 /* ===========================
@@ -241,19 +241,23 @@ footer, nav{
     0 1px 0 rgba(0, 0, 0, 0.3),
     inset 0 4px 8px rgba(0, 0, 0, 0.35);
 }
-/* Fix für verwaiste .button Selektoren (entfernt): nutze die obigen :active/:disabled direkt pro Klasse */
+
+.hint-button {
+  background: var(--color-main-2);
+  color: var(--color-white);
+  font-size: 0.95rem;
+}
 
 /* ===========================
    Dialog
    =========================== */
 dialog{
   border:none; border-radius:12px; padding:1rem 1.5rem; max-width:300px; text-align:center;
-  background: var(--color-white);
-  color: var(--muted);
+  background: var(--color-main-2);
   backdrop-filter: blur(6px) saturate(1.05);
     box-shadow:var(--elev-1) ;
 }
-dialog p{ margin-bottom:1rem; line-height:150%; color: var(--muted); }
+dialog p{ margin-bottom:1rem; line-height:150%;   color: var(--color-white);}
 dialog button{ padding:.3rem 1rem; text-align:center; }
 dialog::backdrop{ background: rgba(0,0,0,.5); }
 
@@ -416,4 +420,17 @@ h1{ color: var(--color-main-1); }
   position:fixed; inset:0; width:100%; height:100%;
   background: url("assets/backdrops/24.png") no-repeat top center / cover;
   z-index:-1;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-3px, 2px); }
+  40% { transform: translate(3px, -2px); }
+  60% { transform: translate(-2px, 1px); }
+  80% { transform: translate(2px, -1px); }
+  100% { transform: translate(0); }
+}
+
+.glitch {
+  animation: glitch 150ms steps(2) 1;
 }
