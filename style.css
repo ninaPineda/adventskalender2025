@@ -107,13 +107,13 @@ main{ top:0; z-index:0; }
 /* Backdrops vereinheitlicht */
 .backdrop, .info-backdrop{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/street.png") no-repeat top center / cover;
+  background: url("assets/backdrops/street.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .index-backdrop{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/street.png") no-repeat top center / cover;
+  background: url("assets/backdrops/street.png") no-repeat center / cover;
   z-index:-1;
 }
 
@@ -192,7 +192,7 @@ footer, nav{
    Question Card (glas + gelb)
    =========================== */
 .question{
-  padding:1rem; margin:1rem 0; line-height:150%;
+  padding:1.2rem; margin:1rem 0; line-height:150%;
   color: var(--muted);
   background: var(--color-accent);
   border-radius:16px;
@@ -278,145 +278,145 @@ h1{ color: var(--color-main-1); }
 
 .backdrop-1{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/1.png") no-repeat top center / cover;
+  background: url("assets/backdrops/1.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-2{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/2.png") no-repeat top center / cover;
+  background: url("assets/backdrops/2.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-3{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/3.png") no-repeat top center / cover;
+  background: url("assets/backdrops/3.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-4{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/4.png") no-repeat top center / cover;
+  background: url("assets/backdrops/4.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-5{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/5.png") no-repeat top center / cover;
+  background: url("assets/backdrops/5.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-6{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/6.png") no-repeat top center / cover;
+  background: url("assets/backdrops/6.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-7{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/7.png") no-repeat top center / cover;
+  background: url("assets/backdrops/7.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-8{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/8.png") no-repeat top center / cover;
+  background: url("assets/backdrops/8.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-9{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/9.png") no-repeat top center / cover;
+  background: url("assets/backdrops/9.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-10{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/10.png") no-repeat top center / cover;
+  background: url("assets/backdrops/10.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-11{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/11.png") no-repeat top center / cover;
+  background: url("assets/backdrops/11.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-12{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/12.png") no-repeat top center / cover;
+  background: url("assets/backdrops/12.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-13{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/13.png") no-repeat top center / cover;
+  background: url("assets/backdrops/13.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-14{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/14.png") no-repeat top center / cover;
+  background: url("assets/backdrops/14.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-15{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/15.png") no-repeat top center / cover;
+  background: url("assets/backdrops/15.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-16{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/16.png") no-repeat top center / cover;
+  background: url("assets/backdrops/16.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-17{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/17.png") no-repeat top center / cover;
+  background: url("assets/backdrops/17.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-18{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/18.png") no-repeat top center / cover;
+  background: url("assets/backdrops/18.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-19{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/19.png") no-repeat top center / cover;
+  background: url("assets/backdrops/19.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-20{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/20.png") no-repeat top center / cover;
+  background: url("assets/backdrops/20.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-21{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/21.png") no-repeat top center / cover;
+  background: url("assets/backdrops/21.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-22{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/22.png") no-repeat top center / cover;
+  background: url("assets/backdrops/22.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-23{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/23.png") no-repeat top center / cover;
+  background: url("assets/backdrops/23.png") no-repeat center / cover;
   z-index:-1;
 }
 
 .backdrop-24{
   position:fixed; inset:0; width:100%; height:100%;
-  background: url("assets/backdrops/24.png") no-repeat top center / cover;
+  background: url("assets/backdrops/24.png") no-repeat center / cover;
   z-index:-1;
 }
 
