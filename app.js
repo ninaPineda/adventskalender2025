@@ -63,6 +63,11 @@ function getOpenedDays() {
     .sort((a, b) => a - b);
 }
 
+function openExplanaition() {
+    const dlg = document.getElementById("hintDialog");
+    dlg?.showModal();
+}
+
 function openHint() {
   if (coins > 10) {
     substractCoin(10);

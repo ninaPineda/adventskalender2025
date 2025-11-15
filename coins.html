@@ -159,11 +159,18 @@
 
     <main class="info-content">
       <div class="backdrop"></div>
-      <div class="question">
-        <p>
-  Tippe Münzen im unteren Feld an, um sie und ihre Nachbarn umzudrehen,
+             <button type="button" class="btn hint-button" onclick="openHint()">
+          🔍 Wie spiele ich?
+        </button>
+              <dialog id="hintDialog">
+          <p>
+              Tippe Münzen im unteren Feld an, um sie und ihre Nachbarn umzudrehen,
   bis das Muster oben stimmt. Alle 5 Level gibt’s eine extra Münze.
-</p>
+          </p>
+          <button class="btn" type="button" onclick="closeHint()">
+            Verstanden
+          </button>
+        </dialog>
               </div>
               <div class="question">
         <div class="stats">
@@ -179,7 +186,7 @@
         <div id="play-field" class="play-field"></div>
 
 
-      <button class="btn" style="position:absolute; bottom:1rem;width:50%" id="reset-btn">Neu starten</button>
+      <button class="btn" id="reset-btn">Neu starten</button>
 
       <div id="overlay" class="hidden">
         <div class="overlay-content">
