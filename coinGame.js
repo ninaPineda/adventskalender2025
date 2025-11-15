@@ -232,7 +232,7 @@ function handleClick(row, col) {
   toggleFlip(row - 1, col + 1);
 
   movesLeft--;
-  movesDisplay.textContent = `Züge übrig: ${movesLeft}`;
+  movesDisplay.textContent = `Züge: ${movesLeft}`;
   updatePlayField();
 
   if (checkWin()) {
@@ -278,7 +278,7 @@ setTimeout(() => {
   levelManager.tries++;
 
   if (levelManager.getTries() < levelManager.maxTries) {
-    triesDisplay.textContent = `Versuche: ${levelManager.getTries()} / ${levelManager.maxTries}`;
+    triesDisplay.textContent = ` ${levelManager.getTries()} / ${levelManager.maxTries}`;
 
     setTimeout(() => {
       resetPlayFieldToScrambledState(); 
@@ -333,16 +333,16 @@ function resetPlayFieldToScrambledState() {
 
   // Züge zurücksetzen
   movesLeft = MAX_MOVES;
-  movesDisplay.textContent = `Züge übrig: ${movesLeft}`;
+  movesDisplay.textContent = `Züge: ${movesLeft}`;
 }
 
 function resetFieldGame() {
   SIZE = levelManager.getSize();
   MAX_MOVES = levelManager.getTurns();
   movesLeft = MAX_MOVES;
-  movesDisplay.textContent = `Züge übrig: ${movesLeft}`;
+  movesDisplay.textContent = `Züge: ${movesLeft}`;
   levelDisplay.textContent = `${levelManager.getLevel()}`;
-  triesDisplay.textContent = `Versuche: ${levelManager.getTries()} / ${levelManager.maxTries}`;
+  triesDisplay.textContent = ` ${levelManager.getTries()} / ${levelManager.maxTries}`;
 
 
   playContainer.classList.add("fade-out");
@@ -365,9 +365,9 @@ function resetGame() {
   MAX_MOVES = levelManager.getTurns();
   movesLeft = MAX_MOVES;
   levelManager.reset();
-  movesDisplay.textContent = `Züge übrig: ${movesLeft}`;
+  movesDisplay.textContent = `Züge: ${movesLeft}`;
   levelDisplay.textContent = `${levelManager.getLevel()}`;
-  triesDisplay.textContent = `Versuche: ${levelManager.getTries()} / ${levelManager.maxTries}`;
+  triesDisplay.textContent = ` ${levelManager.getTries()} / ${levelManager.maxTries}`;
 
 
   playContainer.classList.add("fade-out");
