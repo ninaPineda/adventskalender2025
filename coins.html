@@ -9,6 +9,140 @@
     <title>Adventskalender</title>
     <link rel="stylesheet" href="style.css" />
     <meta name="theme-color" content="#000000" />
+
+    <style>
+      .field-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+
+      .target-field {
+        background-image: url("../img/field-background.jpg");
+        background-position: center;
+        background-size: cover;
+        padding: 1rem;
+        border-radius: 10%;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .target-field,
+      .play-field {
+        transition: opacity 0.3s ease;
+        opacity: 1;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(6rem, 1fr));
+        grid-gap: 1vw;
+      }
+
+      .target-field.fade-out,
+      .play-field.fade-out {
+        opacity: 0;
+      }
+
+      .cell {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        perspective: 600px;
+        position: relative;
+      }
+
+      .cell-inner {
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        position: relative;
+      }
+
+      .cell.flipped .cell-inner {
+        transform: rotateY(180deg);
+      }
+
+      .cell .front,
+      .cell .back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background-size: cover;
+        border-radius: 50%;
+      }
+
+      .cell .front {
+        background-image: url("assets/coin.png");
+      }
+
+      .cell .back {
+        background-image: url("assets/coin_back.png");
+        transform: rotateY(180deg);
+      }
+
+      .cell.inactive {
+        cursor: default;
+      }
+
+      .cell.inactive:hover {
+        transform: scale(1);
+        filter: none;
+      }
+
+      .cell:hover {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 0.05rem rgba(0, 0, 0, 0.3));
+      }
+
+      #failOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(255, 105, 180, 0.2);
+        z-index: 9999;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+        opacity: 0;
+      }
+
+      #failOverlay.visible {
+        opacity: 1;
+      }
+
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(237, 227, 220, 0.8); /* leicht transparent */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(4px);
+      }
+
+      .overlay-content {
+        background: white;
+        padding: 2rem 3rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 5rem rgba(0, 0, 0, 0.2);
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .stats {
+  display: flex;
+  gap: 3.5rem;
+  justify-content: center; /* optional */
+}
+    </style>
   </head>
 
   <body>
@@ -18,16 +152,44 @@
     </div>
 
     <header class="site-header">
-      <a href="../index.html" class="back-button"></a>
+      <a href="index.html" class="back-button"></a>
       <h1 class="adventskalender">Münzen</h1>
       <div class="coins"></div>
     </header>
 
     <main class="info-content">
       <div class="backdrop"></div>
-      <button class="coin-button">More Coins!</button>
-      <button class="less-coin-button">Less Coins!</button>
+      <div class="question">
+        <p>
+  Tippe Münzen im unteren Feld an, um sie und ihre Nachbarn umzudrehen,
+  bis das Muster oben stimmt. Alle 5 Level gibt’s eine extra Münze.
+</p>
+              </div>
+              <div class="question">
+        <div class="stats">
+
+  <p id="moves">Züge: 5</p>
+    <h1 id="level">Level: 1</h1>
+  <p id="tries-display">Versuche: 3</p>
+</div>
+      </div>
+      </div>
+      <div class="field-container">
+        <div id="target-field" class="target-field"></div>
+        <div id="play-field" class="play-field"></div>
+
+
+      <button class="btn" style="position:absolute; bottom:1rem;width:50%" id="reset-btn">Neu starten</button>
+
+      <div id="overlay" class="hidden">
+        <div class="overlay-content">
+          <p id="overlay-text"></p>
+        </div>
+      </div>
+      <div id="failOverlay" class="hidden"></div>
     </main>
+    <script src="coinGame.js"></script>
     <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   </body>
 </html>

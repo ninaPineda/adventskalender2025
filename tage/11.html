@@ -2,10 +2,7 @@
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Adventskalender – Tag 11</title>
     <link rel="stylesheet" href="../style.css" />
   </head>
@@ -23,40 +20,40 @@
     <main>
       <div class="backdrop-11"></div>
       <a href="../index.html" class="back-button"></a>
+
       <div class="day-content">
+
         <button type="button" class="btn hint-button" onclick="openHint()">
-          🔍 Hinweis für 1 Münze
+          🔍 Hinweis für 10 Münzen
         </button>
 
         <dialog id="hintDialog">
-          <p>
-            <strong>Hinweis:</strong><br />
-            Hier kommt dein Hinweis-Text rein – z.B. „Schau dir die Plakate im
-            Tourismusbüro ganz genau an…“
-          </p>
-          <button class="btn" type="button" onclick="closeHint()">
-            Verstanden
-          </button>
+          <p><strong>Hinweis:</strong><br />Hier kommt dein Hinweis-Text rein.</p>
+          <button class="btn" type="button" onclick="closeHint()">Verstanden</button>
         </dialog>
-        <dialog id="noCoinsDialog">
-          <p>
-            <strong>Achtung:</strong><br />
-            Du hast leider nicht genug Münzen für einen Hinweis!
-          </p>
+
+        <dialog id="noAnswerDialog">
+          <p><strong>Achtung:</strong><br />Du hast keine Münzen mehr!</p>
           <a class="btn" href="../coins.html">Mehr Münzen erhalten...</a>
-          <button class="btn" type="button" onclick="closeNoCoinsDialog()">
-            Schließen
-          </button>
+          <button class="btn" type="button" onclick="closeNoAnswerDialog()">Schließen</button>
         </dialog>
+
+        <dialog id="noCoinsDialog">
+          <p><strong>Achtung:</strong><br />Du hast nicht genug Münzen für einen Hinweis!</p>
+          <a class="btn" href="../coins.html">Mehr Münzen erhalten...</a>
+          <button class="btn" type="button" onclick="closeNoCoinsDialog()">Schließen</button>
+        </dialog>
+
         <p class="question">
-          Platzhalter-Inhalt für Tag 11. Füge hier dein Spiel oder deine
-          Geschichte ein.
+          Im Tourismusbüro des Weihnachtsdorfes ging folgende Nachricht des Hackers ein.
         </p>
-        <button class="solution-button" onclick="rightSolution(11)">
-          Lösung!
-        </button>
+
+        <button class="solution-button" onclick="rightSolution(11)">Lösung!</button>
+        <button class="solution-button" onclick="wrongSolution()">Keine Lösung!</button>
+
       </div>
     </main>
+
     <script src="../app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   </body>
