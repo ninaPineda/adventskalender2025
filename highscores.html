@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Adventskalender</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="theme-color" content="#000000" />
+  </head>
+
+  <body>
+    <!-- Desktop-Blocker -->
+    <div class="desktop-blocker" aria-hidden="true">
+      <p>Bitte am Handy öffnen 📱</p>
+    </div>
+
+    <header class="site-header">
+      <h1 class="adventskalender">Info</h1>
+      <div class="coins"></div>
+    </header>
+
+    <main class="info-content">
+      <div class="info-backdrop"></div>
+      <a href="index.html" class="back-button"></a>
+      <h1>Wer hat schon was geschafft?</h1>
+      <div id="scoreList"></div>
+    </main>
+    <script src="app.js"></script>
+<script>
+  const API_URL = "https://script.google.com/macros/s/AKfycbxIl0r1LYU5RqVQlHgrURTgvGFfG_9x1W0QEpU5KBicBwv1w5_UitEMZK6uLhZzUtqmvw/exec";
+
+  fetch(API_URL)
+    .then(r => r.json())
+    .then(data => {
+      // 1) nach Zeit sortieren (neueste oben)
+      data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      // 2) Leaderboard zählen (wie viele gelöst pro Name)
+      const leaderboard = {};
+      data.forEach(row => {
+        const name = row.name || "Unbekannt";
+        leaderboard[name] = (leaderboard[name] || 0) + 1;
+      });
+
+      // optional: Leaderboard sortiert als Array
+      const leaderboardArr = Object.entries(leaderboard)
+        .sort((a, b) => b[1] - a[1]); // meiste Lösungen oben
+
+      const wrap = document.getElementById("scoreList");
+
+      wrap.innerHTML = `
+        <h2>Bestenliste</h2>
+        <div class="leaderboard">
+          ${leaderboardArr.map(([name, count], i) => `
+            <div class="score-row">
+              <span>#${i + 1}</span>
+              <span>${name}</span>
+              <span>${count} gelöst</span>
+            </div>
+          `).join("")}
+        </div>
+
+        <h2>Letzte Lösungen</h2>
+        <div class="recent">
+          ${data.map(entry => `
+            <div class="score-row">
+              <span>${new Date(entry.timestamp).toLocaleString()}</span>
+              <span>${entry.name}</span>
+              <span>${entry.solved}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    })
+    .catch(err => {
+      document.getElementById("scoreList").innerHTML =
+        "<p>Upsi, konnte die Daten nicht laden 😵</p>";
+      console.error(err);
+    });
+</script>
+  </body>
+</html>

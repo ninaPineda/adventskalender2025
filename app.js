@@ -239,7 +239,7 @@ function getUserName() {
   return name;
 }
 
-const LOG_URL = "https://script.google.com/macros/s/AKfycbxvRor9CexUz5F4fl0cYrFm02fr-Ir6z8cPBagzI2fzd8buRMZVXzgam3nWQfS5OJSt8w/exec";
+const LOG_URL = "https://script.google.com/macros/s/AKfycbxIl0r1LYU5RqVQlHgrURTgvGFfG_9x1W0QEpU5KBicBwv1w5_UitEMZK6uLhZzUtqmvw/exec";
 
 function logSolved(day) {
   const name = getUserName();
