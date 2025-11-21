@@ -239,19 +239,19 @@ function getUserName() {
   return name;
 }
 
-const LOG_URL = "https://script.google.com/macros/s/AKfycbytsKrUGny5_wMCzkhmTb44WWF65aXF_JyjZUkyzqVzos4qHlKZpxf061XGQ7c5Yvkp6A/exec";
+const LOG_URL = "https://script.google.com/macros/s/AKfycbz2tiwdUNU87v0gx6Ph2WdwS1xIEumSaK9OBPYnL5Hk10Pt5BQl49XmkFjJZAPolkTLbQ/exec";
 
 function logSolved(day) {
   const name = getUserName();
 
-  const form = new URLSearchParams();
-  form.append("name", name);
-  form.append("solved", "Tag " + day);
-
   fetch(LOG_URL, {
-    method: "POST",
-    body: form
-  });
+  method: "POST",
+  mode: "no-cors",
+  body: new URLSearchParams({
+    name,
+    solved: "Tag " + day
+  })
+}).catch(() => {});
 }
 
 document.addEventListener("DOMContentLoaded", () => {
