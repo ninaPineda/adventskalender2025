@@ -68,8 +68,14 @@ function openExplanaition() {
     dlg?.showModal();
 }
 
+function showCheckDialog() {
+    const dlg = document.getElementById("checkDialog");
+    dlg?.showModal();
+}
+
 function openHint() {
-  if (coins > 10) {
+  closeCheckDialog();
+  if (coins >= 10) {
     substractCoin(10);
     const dlg = document.getElementById("hintDialog");
     dlg?.showModal();
@@ -91,6 +97,11 @@ function closeHint() {
 
 function closeNoAnswerDialog() {
   const dlg = document.getElementById("noAnswerDialog");
+  dlg?.close();
+}
+
+function closeCheckDialog() {
+  const dlg = document.getElementById("checkDialog");
   dlg?.close();
 }
 
@@ -187,13 +198,32 @@ function lockFutureDays() {
   });
 }
 
+function getDayFromUrl() {
+  const m = window.location.search.match(/tag=(\d+)/);
+  return m ? parseInt(m[1], 10) : 1;
+}
+
+async function loadDayContent(day) {
+  const slot = document.getElementById("daySlot");
+  if (!slot) return;
+
+  try {
+    const res = await fetch(`./content/${day}.html`);
+    slot.innerHTML = await res.text();
+  } catch (e) {
+    slot.innerHTML = `<p class="question">Oops – Inhalt für Tag ${day} nicht gefunden.</p>`;
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  const day = getDayFromUrl();
+  loadDayContent(day);
+
   document
     .querySelector(".footer-today")
     ?.addEventListener("click", scrollToToday);
 
   document.querySelector(".coin-button")?.addEventListener("click", addCoin);
-
   document
     .querySelector(".less-coin-button")
     ?.addEventListener("click", substractCoin);
