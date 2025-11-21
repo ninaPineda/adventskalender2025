@@ -7,22 +7,6 @@ const rightArrow = document.querySelector(".arrow.right");
 const opened = new Set(JSON.parse(localStorage.getItem(LS_KEY) || "[]"));
 let coins = new Number(localStorage.getItem(LS_KEY_COINS) ?? "9");
 let currentIndex = 1;
-const LS_KEY_USER = "advent_user_name";
-
-function getOrAskUserName() {
-  let name = localStorage.getItem(LS_KEY_USER);
-
-  if (!name) {
-    name = prompt("Wie heißt du? (Nickname reicht 🙂)")?.trim();
-
-    // falls abgebrochen oder leer: nochmal kurz nerven oder fallback
-    if (!name) name = "Unbekannt";
-
-    localStorage.setItem(LS_KEY_USER, name);
-  }
-
-  return name;
-}
 
 function saveOpened() {
   localStorage.setItem(LS_KEY, JSON.stringify([...opened]));
@@ -139,7 +123,7 @@ function rightSolution(day) {
     if (!opened.has(day)) {
       opened.add(day);
       saveOpened();
-      logSolvedDay(day);
+      logSolved(day);
     }
 
   // Konfetti-Effekt (rot/grün)
@@ -228,6 +212,7 @@ function lockFutureDays() {
   });
 }
 
+
 function getDayFromUrl() {
   const m = window.location.search.match(/tag=(\d+)/);
   return m ? parseInt(m[1], 10) : 1;
@@ -245,29 +230,28 @@ async function loadDayContent(day) {
   }
 }
 
-const LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCPyvtlEahMjcKvNUHhHBSHDLTd7oJdZNxbw_dJ0a5JoESokI5iODz-Fto8B7joqoQ/exec";
-
-function logSolvedDay(day) {
-  let userId = localStorage.getItem("advent_user_id");
-  if (!userId) {
-    userId = crypto.randomUUID();
-    localStorage.setItem("advent_user_id", userId);
+function getUserName() {
+  let name = localStorage.getItem("advent_user_name");
+  if (!name) {
+    name = prompt("Wie heißt du? (Nur einmal nötig)")?.trim() || "Unbekannt";
+    localStorage.setItem("advent_user_name", name);
   }
+  return name;
+}
 
-  const userName = getOrAskUserName();
+const LOG_URL = "DEINE_EXEC_URL";
 
-  fetch(LOG_ENDPOINT, {
+function logSolved(day) {
+  const name = getUserName();
+
+  const form = new URLSearchParams();
+  form.append("name", name);
+  form.append("solved", "Tag " + day);
+
+  fetch(LOG_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      day,
-      userId,
-      userName,   // <- neu
-      coins,
-      info: "solved",
-      notify: true
-    })
-  }).catch(() => {});
+    body: form
+  });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
