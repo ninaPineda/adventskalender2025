@@ -7,6 +7,22 @@ const rightArrow = document.querySelector(".arrow.right");
 const opened = new Set(JSON.parse(localStorage.getItem(LS_KEY) || "[]"));
 let coins = new Number(localStorage.getItem(LS_KEY_COINS) ?? "9");
 let currentIndex = 1;
+const LS_KEY_USER = "advent_user_name";
+
+function getOrAskUserName() {
+  let name = localStorage.getItem(LS_KEY_USER);
+
+  if (!name) {
+    name = prompt("Wie heißt du? (Nickname reicht 🙂)")?.trim();
+
+    // falls abgebrochen oder leer: nochmal kurz nerven oder fallback
+    if (!name) name = "Unbekannt";
+
+    localStorage.setItem(LS_KEY_USER, name);
+  }
+
+  return name;
+}
 
 function saveOpened() {
   localStorage.setItem(LS_KEY, JSON.stringify([...opened]));
@@ -123,6 +139,7 @@ function rightSolution(day) {
     if (!opened.has(day)) {
       opened.add(day);
       saveOpened();
+      logSolvedDay(day);
     }
 
   // Konfetti-Effekt (rot/grün)
@@ -180,20 +197,33 @@ function lockFutureDays() {
   const openedDays = getOpenedDays();
 
   links.forEach((link) => {
-    const match = link.href.match(/tage\/(\d+)\.html/);
-    if (!match) return;
+    // NEU: Tag aus beiden URL-Varianten ziehen
+    let day = null;
 
-    const day = parseInt(match[1]);
+    // 1) neue Variante: template.html?tag=12
+    const qMatch = link.href.match(/[?&]tag=(\d+)/);
+    if (qMatch) day = parseInt(qMatch[1], 10);
+
+    // 2) alte Variante: tage/12.html
+    if (day === null) {
+      const pathMatch = link.href.match(/tage\/(\d+)\.html/);
+      if (pathMatch) day = parseInt(pathMatch[1], 10);
+    }
+
+    if (day === null) return;
+
+    // optional: skip intro/bonus
+    if (day === 0 || day === 25) return;
+
     const prevDayUnlocked = day === 1 || openedDays.includes(day - 1);
 
-    // Tag darf geöffnet werden, wenn heutiges Datum >= Tag und vorheriger Tag geschafft ist
     if (day > today || !prevDayUnlocked) {
       link.addEventListener("click", (e) => {
         e.preventDefault();
-        document.getElementById("lockedPopup").showModal();
+        document.getElementById("lockedPopup")?.showModal();
       });
       link.style.filter = "grayscale(0.7) brightness(0.6)";
-      link.style.pointerEvents = "auto"; // Damit Klick noch Popup auslöst
+      link.style.pointerEvents = "auto";
     }
   });
 }
@@ -215,6 +245,31 @@ async function loadDayContent(day) {
   }
 }
 
+const LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCPyvtlEahMjcKvNUHhHBSHDLTd7oJdZNxbw_dJ0a5JoESokI5iODz-Fto8B7joqoQ/exec";
+
+function logSolvedDay(day) {
+  let userId = localStorage.getItem("advent_user_id");
+  if (!userId) {
+    userId = crypto.randomUUID();
+    localStorage.setItem("advent_user_id", userId);
+  }
+
+  const userName = getOrAskUserName();
+
+  fetch(LOG_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      day,
+      userId,
+      userName,   // <- neu
+      coins,
+      info: "solved",
+      notify: true
+    })
+  }).catch(() => {});
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const day = getDayFromUrl();
   loadDayContent(day);
@@ -222,11 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector(".footer-today")
     ?.addEventListener("click", scrollToToday);
-
-  document.querySelector(".coin-button")?.addEventListener("click", addCoin);
-  document
-    .querySelector(".less-coin-button")
-    ?.addEventListener("click", substractCoin);
 
   renderCoins();
   updateGallery();
