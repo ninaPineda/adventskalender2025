@@ -119,8 +119,8 @@ function wrongSolution() {
 
 function rightSolution(day) {
   if (coins > 0) {
-    addCoin();
     if (!opened.has(day)) {
+          addCoin();
       opened.add(day);
       saveOpened();
       logSolved(day);
