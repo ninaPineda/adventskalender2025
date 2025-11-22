@@ -1,6 +1,42 @@
+
 <p class="question">
-  Im Tourismusbüro des Weihnachtsdorfes ging folgende Nachricht des Hackers ein.
+  In der Musikschule sind die Noten vom Hacker gelöscht worden. Die Elfen spielen nun ihre Instrumente aus dem Kopf. <br><br>
+  Für jedes Instrument musst du eine Münze mehr ausgeben – welches Lied spielen sie hier?
 </p>
 
-<button class="solution-button" onclick="rightSolution(2)">Lösung!</button>
-<button class="solution-button" onclick="wrongSolution()">Keine Lösung!</button>
+<div class="buttons">
+  <button class="btn" onclick="playSound('schlagzeug', 1,2)">
+    1 <img class="mini-img" src="../../assets/coin.png"> Schlagzeug
+  </button>
+
+  <button class="btn" onclick="playSound('bass', 3,2)">
+    3 <img class="mini-img" src="../../assets/coin.png"> Bass
+  </button>
+
+  <button class="btn" onclick="playSound('glocken', 5,2)">
+    5 <img class="mini-img" src="../../assets/coin.png"> Glocken
+  </button>
+
+  <button class="btn" onclick="playSound('synth', 7,2)">
+    7 <img class="mini-img" src="../../assets/coin.png"> Synthesizer
+  </button>
+
+  <button class="btn" onclick="playSound('melodie', 9,2)">
+    9 <img class="mini-img" src="../../assets/coin.png"> Melodie
+  </button>
+  
+</div>
+<div id="miniPlayer" class="mini-player" hidden>
+  <div class="mini-player__row">
+    <span id="nowPlaying">🎵 …</span>
+    <button class="mini-player__toggle" onclick="togglePlay()">⏸</button>
+  </div>
+  <div class="mini-player__bar">
+    <div id="playerProgress" class="mini-player__progress"></div>
+  </div>
+</div>
+<br><br><br><br>
+
+<input id="answerInput" class="answer-input" type="text" placeholder="Welches Lied ist es?">
+<button class="solution-button" onclick="checkAnswer(2)">Antwort prüfen</button>
+<br><br><br><br>

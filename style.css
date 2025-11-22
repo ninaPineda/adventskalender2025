@@ -77,24 +77,20 @@ a{ color: var(--color-white); -webkit-tap-highlight-color: rgba(0,0,0,.08); text
    =========================== */
 .site-header {
   position: fixed;
+background-image: url(assets/header.png);
+background-repeat: no-repeat;
+background-position: center;
+background-size: 100% 100%;
   top: 0;
   width: 100%;
-  height: 4.5rem;
+  height: 4rem;
+    z-index:10; filter: drop-shadow(0 0rem 5rem rgba(0,21,45,.4));
   padding: 0 1rem 0 .5rem;
   display: grid;
   grid-gap: .3rem;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
   justify-items: center;
-  z-index: 10;
-  color: var(--color-main-1);
-
-  /* Liquid Glass Effekt */
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(20px) saturate(1.8) contrast(1.1);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8) contrast(1.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  border-radius: 0 0 1rem 1rem;
 }
 .adventskalender{ transform:translateY(-0.2rem); grid-column: span 3; font-size:1.8rem; }
 .coins{ display:flex; align-items:center; gap:.35rem; font-size:larger; }
@@ -118,7 +114,7 @@ main{ top:0; z-index:0; }
 }
 
 /* Content spacing */
-.day-content, .info-content{ margin:6rem 1rem 0; height:80%; }
+.day-content, .info-content{ margin:6rem 1rem 0; height:80%;}
 
 
 
@@ -210,7 +206,7 @@ footer, nav{
   width: 100%;
   margin: .5rem 0;
   padding: .7rem 1.2rem;
-  text-align: center;
+  text-align: left;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: .2px;
@@ -246,6 +242,28 @@ footer, nav{
   font-size: 0.95rem;
 }
 
+.yes-btn, .no-btn, .close-btn{
+  width: 2.5rem;
+  height: 2.5rem;
+  border:none; outline:none; cursor:pointer; z-index:1000;
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,.25));
+  transition: transform .1s ease, filter .12s ease;
+}
+
+.yes-btn{
+    background:url("assets/icon_7.png") no-repeat center / contain;
+}
+
+.no-btn, .close-btn{
+  background:url("assets/icon_8.png") no-repeat center / contain;
+}
+
+.close-btn{
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+}
+
 /* ===========================
    Dialog
    =========================== */
@@ -255,7 +273,7 @@ dialog{
   backdrop-filter: blur(6px) saturate(1.05);
     box-shadow:var(--elev-1) ;
 }
-dialog p{ margin-bottom:1rem; line-height:150%;   color: var(--color-white);}
+dialog p{ margin-top:3rem; margin-bottom:2rem; line-height:150%;   color: var(--color-white);}
 dialog button{ padding:.3rem 1rem; text-align:center; }
 dialog::backdrop{ background: rgba(0,0,0,.5); }
 
@@ -263,7 +281,7 @@ dialog::backdrop{ background: rgba(0,0,0,.5); }
    Back Button
    =========================== */
 .back-button{
-  position:fixed; top:.5rem; left:1rem; width:3.5rem; height:3.5rem;
+  position:fixed; top:0.7rem; left:1.5rem; width:2.5rem; height:2.5rem;
   background:url("assets/icon_3.png") no-repeat center / contain;
   border:none; outline:none; cursor:pointer; z-index:1000;
   filter: drop-shadow(0 8px 14px rgba(0,0,0,.25));
@@ -431,4 +449,45 @@ h1{ color: var(--color-main-1); }
 
 .glitch {
   animation: glitch 150ms steps(2) 1;
+}
+
+.mini-img {
+  width: 1.7rem;
+  height: 1.7rem;
+  vertical-align: -0.47rem;
+  transform: translateX(-0.15rem);
+}
+
+.answer-input {
+  width: 80%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-radius: 1rem;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+.mini-player{
+  margin-top: 1rem;
+  height:5rem;
+  padding: .8rem 1rem;
+  color: var(--color-black);
+  background: var(--color-accent);
+  border: none;
+  border-radius: 1.5rem;
+  display: grid;
+  gap: .5rem;
+}
+.mini-player__row{
+  display:flex; align-items:center; justify-content:space-between;
+  font-weight:600;
+}
+.mini-player__toggle{
+  background: transparent; border:0; font-size:1.4rem; cursor:pointer; color:var(--color-black);
+}
+.mini-player__bar{
+  height:.4rem; background: var(--color-main-2); border-radius:999px; overflow:hidden;
+}
+.mini-player__progress{
+  height:100%; width:0%; background:var(--color-main-1); transition:width .1s linear;
 }

@@ -80,9 +80,13 @@ function openHint() {
     const dlg = document.getElementById("hintDialog");
     dlg?.showModal();
   } else {
-    const dlg = document.getElementById("noCoinsDialog");
-    dlg?.showModal();
+openNoCoinsDialog();
   }
+}
+
+function openNoCoinsDialog(){
+      const dlg = document.getElementById("noCoinsDialog");
+    dlg?.showModal();
 }
 
 function closeNoCoinsDialog() {

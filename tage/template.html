@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <title>Adventskalender – Tag 1</title>
+    <title>Adventskalender</title>
     <link rel="stylesheet" href="../style.css" />
   </head>
 
@@ -16,7 +16,7 @@
     </div>
 
     <header class="site-header">
-      <h1 class="adventskalender">TAG 1</h1>
+      <h1 class="adventskalender"></h1>
       <div class="coins"></div>
     </header>
 
@@ -30,7 +30,7 @@
           class="btn hint-button"
           onclick="showCheckDialog()"
         >
-          🔍 Hinweis für 10 Münzen
+          🔍 Hinweis für 10 <img src="../assets/coin.png" class = "mini-img">
         </button>
 
         <dialog id="hintDialog">
@@ -45,42 +45,47 @@
         </dialog>
 
         <dialog id="noAnswerDialog">
+          <button
+            class="close-btn"
+            type="button"
+            onclick="closeNoAnswerDialog()"
+          >
+            
+          </button>
           <p>
             <strong>Achtung:</strong><br />Du hast nicht genug Münzen zum
             Antworten!
           </p>
-          <a class="btn" href="../coins.html">Mehr Münzen erhalten...</a>
-          <button class="btn" type="button" onclick="closeNoAnswerDialog()">
-            Schließen
-          </button>
+          <a class="btn" href="../coins.html">Mehr <img src="../assets/coin.png" class = "mini-img">Münzen erhalten</a>
         </dialog>
 
         <dialog id="checkDialog">
           <p>
-            <strong>Achtung:</strong><br />möchtest du wirklich 10 Münzen für
-            einen Hinweis ausgeben?
+            <strong>Achtung:</strong><br />möchtest du
+            <strong>10 <img src="../assets/coin.png" class = "mini-img"></strong>für einen Hinweis ausgeben?
           </p>
-          <button class="btn" type="button" onclick="openHint()">Ja</button>
-          <button class="btn" type="button" onclick="closeCheckDialog()">
-            Nein
-          </button>
+          <button class="yes-btn" type="button" onclick="openHint()"></button>
+          <button
+            class="no-btn"
+            type="button"
+            onclick="closeCheckDialog()"
+          ></button>
         </dialog>
 
         <dialog id="noCoinsDialog">
-          <p>
-            <strong>Achtung:</strong><br />Du hast nicht genug Münzen für einen
-            Hinweis!
-          </p>
-          <a class="btn" href="../coins.html">Mehr Münzen erhalten...</a>
-          <button class="btn" type="button" onclick="closeNoCoinsDialog()">
-            Schließen
+                    <button class="close-btn" type="button" onclick="closeNoCoinsDialog()">
           </button>
+          <p>
+            <strong>Achtung:</strong><br />Du hast nicht mehr genug Münzen!
+          </p>
+          <a class="btn" href="../coins.html">Mehr Münzen erhalten</a>
         </dialog>
         <div id="daySlot"></div>
       </div>
     </main>
 
     <script src="../app.js"></script>
+    <script src="gamey.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   </body>
 </html>
