@@ -97,52 +97,127 @@ const userAnswer = document
       ];
     } else if (day == 31){
       correctAnswers = [
-        "1",
-      ];
+  "martin luther",
+  "luther",
+  "martin",
+  "martin luter",
+  "martin luthe",
+  "martin lutter",
+  "martinn luther",
+  "marin luther",
+  "martin luter",
+  "maatin luther",
+  "m luther",
+  "m.luther",
+  "martin-luther"
+];
     } else if (day == 32){
       correctAnswers = [
-        "2",
-      ];
+  "pippi langstrumpf",
+  "pipi langstrumpf",
+  "pippi",
+  "langstrumpf",
+  "pippi langstrump",
+  "pipi langstrump",
+  "pippy langstrumpf",
+  "pipi langstrupf",
+  "pippi langstrupf",
+  "pipi langstrump",
+  "pippi langstrimpf",
+  "pipi langstrimpf",
+  "pippi lang",
+  "p langstrumpf",
+  "langstrumpf pippi",
+  "pippi-langtstrumpf"
+];
     } else if (day == 33){
       correctAnswers = [
-        "3",
-      ];
+  "loriot",
+  "vio lorenz",
+  "bernhard victor",
+  "vicco von bülow",
+  "vicco von bulow",
+  "vicco",
+  "von bülow",
+  "von bulow",
+  "loriott",
+  "loriot.",
+  "loriot!",
+  "lorio",
+  "lori o t"
+];
     } else if (day == 34){
       correctAnswers = [
-        "4",
-      ];
-    } else if (day == 35){
+  "mariah carey",
+  "mariah",
+  "carey",
+  "maraya carey",
+  "maria carey",
+  "mariah cary",
+  "mariah carry",
+  "mareah carey",
+  "mariah-cdgarey",  // falls jemand tippselt
+  "m carey",
+  "m. carey",
+  "queen of christmas"
+];
+    } else if (day == 3){
       correctAnswers = [
-        "5",
-      ];
+  "die ärzte",
+  "die arzte",
+  "ärzte",
+  "arzte",
+  "ärtzte",
+  "die ärtze",
+  "die äreste",
+  "diearzt",
+  "die aerzte",
+  "die-aerzte",
+  "die ärzTe",
+  "die aerzte",
+  "arztE",
+  "die ärzte!",
+  "die ärzte."
+];
     } 
 
 if (correctAnswers.includes(userAnswer)) {
-  if (day == 31 || day == 32 ||day == 33 || day == 34 ){
-loadDayContent(day+1);
-  // Konfetti-Effekt (rot/grün)
-  confetti({
-    particleCount: 1000, // MEHR!
-    spread: 110, // breiter
-    startVelocity: 50, // schneller los
-    scalar: 1.5, // GRÖSSER!
-    gravity: 0.6, // länger in der Luft
-    origin: { y: 1.3 },
-    colors: [
-      "#962a2a", // dunkelrot
-      "#E24A39", // hellrot
-      "#065308", // dunkelgrün
-      "#2E8B33", // hellgrün
-      "#FFD530", // gold
-      "#F8F4EF", // schnee
-    ],
-    zIndex: 9999,
-  })
+
+  // Zwischensteps (31, 32, 33, 34)
+  if ([31, 32, 33, 34].includes(day)) {
+
+    // Nächsten Step berechnen
+    const nextStep = day + 1;
+
+    // Konfetti-Effekt
+    confetti({
+      particleCount: 1000,
+      spread: 110,
+      startVelocity: 50,
+      scalar: 1.5,
+      gravity: 0.6,
+      origin: { y: 1.3 },
+      colors: [
+        "#962a2a",
+        "#E24A39",
+        "#065308",
+        "#2E8B33",
+        "#FFD530",
+        "#F8F4EF"
+      ],
+      zIndex: 9999
+    });
+
+    setTimeout(() => {
+      window.location.href = `template.html?tag=${nextStep}`;
+    }, 600);
+
   } else {
-    rightSolution(day); 
+    // Finale Lösung
+    rightSolution(day);
   }
 
-    } else {
-      wrongSolution();
-    }
+} else {
+  wrongSolution();
+}
   }

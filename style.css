@@ -195,6 +195,21 @@ footer, nav{
     box-shadow:var(--elev-1);
   backdrop-filter: blur(3px) saturate(1.05);
 }
+.wunschzettel-paper {
+  background: #fffcf8f3;
+  padding: 1.6rem;
+  border-radius: 1rem;
+  border: 2px dashed #c49a66;
+  font-family: "Caveat", cursive;
+  font-size: 1.35rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.handwritten {
+  font-family: "Shadows Into Light Two", cursive;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
 .question h2{ margin-bottom:.5rem; }
 
 /* ===========================

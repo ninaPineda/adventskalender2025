@@ -8,6 +8,7 @@
     />
     <title>Adventskalender</title>
     <link rel="stylesheet" href="../style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light+Two&display=swap" rel="stylesheet">
   </head>
 
   <body>
@@ -34,11 +35,10 @@
         </button>
 
         <dialog id="hintDialog">
-          <p>
-            <strong>Hinweis:</strong><br />Der Tag beginnt beim Weihnachtsmann.
-            <br />
-            "Vor" heißt nicht "direkt davor".
-          </p>
+          <h2>
+            Hinweis:
+          </h2>
+          <p id="hintText"></p>
           <button class="btn" type="button" onclick="closeHint()">
             Verstanden
           </button>

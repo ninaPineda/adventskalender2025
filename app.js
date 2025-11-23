@@ -7,6 +7,12 @@ const rightArrow = document.querySelector(".arrow.right");
 const opened = new Set(JSON.parse(localStorage.getItem(LS_KEY) || "[]"));
 let coins = new Number(localStorage.getItem(LS_KEY_COINS) ?? "9");
 let currentIndex = 1;
+let HINTS = null;
+
+async function loadHints() {
+  const res = await fetch("../hints.json");
+  HINTS = await res.json();
+}
 
 function saveOpened() {
   localStorage.setItem(LS_KEY, JSON.stringify([...opened]));
@@ -73,12 +79,39 @@ function showCheckDialog() {
     dlg?.showModal();
 }
 
+function getDayFromURL() {
+  const params = new URLSearchParams(window.location.search);
+
+  // 1) Query
+  if (params.has("tag")) {
+    return parseFloat(params.get("tag"));
+  }
+
+  // 2) Falls du später mal wieder tage/3.html nutzt
+  const match = window.location.pathname.match(/(\d+(\.\d+)?)\.html$/);
+  if (match) return parseFloat(match[1]);
+
+  return null;
+}
+
+function getHintForDay(day) {
+  if (!HINTS) return null;
+  const mainDay = Math.floor(day); // falls mal 3.2 etc.
+  return HINTS[String(mainDay)] || null;
+}
+
+
 function openHint() {
   closeCheckDialog();
   if (coins >= 10) {
-    substractCoin(10);
-    const dlg = document.getElementById("hintDialog");
-    dlg?.showModal();
+    //substractCoin(10);
+      const day = getDayFromURL();     // hast du ja schon
+  const hint = getHintForDay(day);
+
+  if (!hint) return;
+
+  document.getElementById("hintText").innerHTML = hint;
+  document.getElementById("hintDialog").showModal();
   } else {
 openNoCoinsDialog();
   }
@@ -273,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector(".footer-today")
     ?.addEventListener("click", scrollToToday);
-
+loadHints();
   renderCoins();
   updateGallery();
   lockFutureDays();
