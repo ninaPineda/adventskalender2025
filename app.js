@@ -114,7 +114,15 @@ function wrongSolution() {
     substractCoin();
     const el = document.querySelector(".day-content");
     el.classList.add("glitch");
-    setTimeout(() => el.classList.remove("glitch"), 200);
+    setTimeout(() => el.classList.remove("glitch"), 150);
+          const failOverlay = document.getElementById("failOverlay");
+failOverlay.classList.remove("hidden");
+failOverlay.classList.add("visible");
+
+setTimeout(() => {
+  failOverlay.classList.remove("visible");
+  failOverlay.classList.add("hidden");
+}, 1500); // Nach 1.5 Sekunden wieder ausblenden
   } else {
     const dlg = document.getElementById("noAnswerDialog");
     dlg?.showModal();

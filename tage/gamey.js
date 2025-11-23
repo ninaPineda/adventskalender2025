@@ -95,15 +95,54 @@ const userAnswer = document
         "last christmas wham",
         "last christmas von wham",
       ];
-    } else if (day == 3){
+    } else if (day == 31){
       correctAnswers = [
-        "charles",
+        "1",
+      ];
+    } else if (day == 32){
+      correctAnswers = [
+        "2",
+      ];
+    } else if (day == 33){
+      correctAnswers = [
+        "3",
+      ];
+    } else if (day == 34){
+      correctAnswers = [
+        "4",
+      ];
+    } else if (day == 35){
+      correctAnswers = [
+        "5",
       ];
     } 
 
 if (correctAnswers.includes(userAnswer)) {
+  if (day == 31 || day == 32 ||day == 33 || day == 34 ){
+loadDayContent(day+1);
+  // Konfetti-Effekt (rot/grün)
+  confetti({
+    particleCount: 1000, // MEHR!
+    spread: 110, // breiter
+    startVelocity: 50, // schneller los
+    scalar: 1.5, // GRÖSSER!
+    gravity: 0.6, // länger in der Luft
+    origin: { y: 1.3 },
+    colors: [
+      "#962a2a", // dunkelrot
+      "#E24A39", // hellrot
+      "#065308", // dunkelgrün
+      "#2E8B33", // hellgrün
+      "#FFD530", // gold
+      "#F8F4EF", // schnee
+    ],
+    zIndex: 9999,
+  })
+  } else {
     rightSolution(day); 
+  }
+
     } else {
-      alert("Leider falsch 😭");
+      wrongSolution();
     }
   }
