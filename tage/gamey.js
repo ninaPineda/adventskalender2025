@@ -19,11 +19,11 @@
     substractCoin(cost);
 
     const files = {
-      schlagzeug: "../assets/day2/Last Christmas Schlagzeug.mp3",
-      bass: "../assets/day2/Last Christmas Bass.mp3",
-      glocken: "../assets/day2/Last Christmas Glocken.mp3",
-      synth: "../assets/day2/Last Christmas Synthesizer.mp3",
-      melodie: "../assets/day2/Last Christmas Melodie.mp3",
+      schlagzeug: "../assets/day2/Last Christmas Schlagzeug.MP3",
+      bass: "../assets/day2/Last Christmas Bass.MP3",
+      glocken: "../assets/day2/Last Christmas Glocken.MP3",
+      synth: "../assets/day2/Last Christmas Synthesizer.MP3",
+      melodie: "../assets/day2/Last Christmas Melodie.MP3",
     };
 
     // alte Audio stoppen, wenn was läuft
