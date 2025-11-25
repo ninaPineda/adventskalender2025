@@ -4,28 +4,6 @@
   Für jedes Instrument musst du eine Münze mehr ausgeben – welches Lied spielen sie hier?
 </p>
 
-<div class="buttons">
-  <button class="btn" onclick="playSound('schlagzeug', 1,2)">
-    1 <img class="mini-img" src="../assets/coin.png"> Schlagzeug
-  </button>
-
-  <button class="btn" onclick="playSound('bass', 3,2)">
-    3 <img class="mini-img" src="../assets/coin.png"> Bass
-  </button>
-
-  <button class="btn" onclick="playSound('glocken', 5,2)">
-    5 <img class="mini-img" src="../assets/coin.png"> Glocken
-  </button>
-
-  <button class="btn" onclick="playSound('synth', 7,2)">
-    7 <img class="mini-img" src="../assets/coin.png"> Synthesizer
-  </button>
-
-  <button class="btn" onclick="playSound('melodie', 9,2)">
-    9 <img class="mini-img" src="../assets/coin.png"> Melodie
-  </button>
-  
-</div>
 <div id="miniPlayer" class="mini-player" hidden>
   <div class="mini-player__row">
     <span id="nowPlaying">🎵 …</span>
@@ -35,8 +13,46 @@
     <div id="playerProgress" class="mini-player__progress"></div>
   </div>
 </div>
-<br><br><br><br>
+<br><br>
+<div class="buttons">
 
+  <div class="fill-btn">
+    Schlagzeug
+    <button onclick="playSound('schlagzeug', 1, 2)" class="small-btn">
+      Kaufen <strong>1 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+
+  <div class="fill-btn">
+    Bass
+    <button onclick="playSound('bass', 3, 2)" class="small-btn">
+      Kaufen <strong>3 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+
+  <div class="fill-btn">
+    Glocken
+    <button onclick="playSound('glocken', 5, 2)" class="small-btn">
+      Kaufen <strong>5 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+
+  <div class="fill-btn">
+    Synthesizer
+    <button onclick="playSound('synth', 7, 2)" class="small-btn">
+      Kaufen <strong>7 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+
+  <div class="fill-btn">
+    Melodie
+    <button onclick="playSound('melodie', 9, 2)" class="small-btn">
+      Kaufen <strong>9 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+
+</div>
+<br><br>
 <input id="answerInput" class="answer-input" type="text" placeholder="Welches Lied ist es?">
 <button class="solution-button" onclick="checkAnswer(2)">Antwort prüfen</button>
 <br><br><br><br>
