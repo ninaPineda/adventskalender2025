@@ -1,10 +1,12 @@
 const LS_KEY = "advent_opened";
+const LS_KEY_HINTS = "hints_opened";
 const LS_KEY_COINS = "advent_coins";
 const images = document.querySelector(".houses");
 const total = document.querySelectorAll(".houses img").length;
 const leftArrow = document.querySelector(".arrow.left");
 const rightArrow = document.querySelector(".arrow.right");
 const opened = new Set(JSON.parse(localStorage.getItem(LS_KEY) || "[]"));
+const hints = new Set(JSON.parse(localStorage.getItem(LS_KEY_HINTS) || "[]"));
 let coins = new Number(localStorage.getItem(LS_KEY_COINS) ?? "9");
 let currentIndex = 1;
 let HINTS = null;
@@ -17,8 +19,13 @@ async function loadHints() {
 function saveOpened() {
   localStorage.setItem(LS_KEY, JSON.stringify([...opened]));
 }
+
 function saveCoins() {
   localStorage.setItem(LS_KEY_COINS, String(coins));
+}
+
+function saveHints() {
+  localStorage.setItem(LS_KEY_HINTS, JSON.stringify([...hints]));
 }
 
 function renderCoins() {
@@ -70,56 +77,87 @@ function getOpenedDays() {
 }
 
 function openExplanaition() {
-    const dlg = document.getElementById("hintDialog");
-    dlg?.showModal();
+  const dlg = document.getElementById("hintDialog");
+  dlg?.showModal();
 }
 
 function showCheckDialog() {
-    const dlg = document.getElementById("checkDialog");
-    dlg?.showModal();
+  const dlg = document.getElementById("checkDialog");
+  dlg?.showModal();
 }
 
 function getDayFromURL() {
-  const params = new URLSearchParams(window.location.search);
-
-  // 1) Query
-  if (params.has("tag")) {
-    return parseFloat(params.get("tag"));
-  }
-
-  // 2) Falls du später mal wieder tage/3.html nutzt
-  const match = window.location.pathname.match(/(\d+(\.\d+)?)\.html$/);
-  if (match) return parseFloat(match[1]);
-
-  return null;
+  const params = new URLSearchParams(location.search);
+  return Number(params.get("tag")) || 1;
 }
 
 function getHintForDay(day) {
   if (!HINTS) return null;
-  const mainDay = Math.floor(day); // falls mal 3.2 etc.
+  const mainDay = Math.floor(day);
   return HINTS[String(mainDay)] || null;
 }
 
-
 function openHint() {
+  const day = getDayFromURL();
   closeCheckDialog();
-  if (coins >= 10) {
-    //substractCoin(10);
-      const day = getDayFromURL();     // hast du ja schon
-  const hint = getHintForDay(day);
 
+  if (coins >= 10) {
+    // substractCoin(10); // wieder aktivieren, wenn du willst
+
+    const hint = getHintForDay(day);
+
+    hints.add(day); 
+    saveHints();
+    updateHintButton();
+
+    if (!hint) return;
+
+    document.getElementById("hintText").innerHTML = hint;
+    document.getElementById("hintDialog").showModal();
+  } else {
+    openNoCoinsDialog();
+  }
+}
+
+function showHintDirect() {
+  const day = getDayFromURL();
+  const hint = getHintForDay(day);
   if (!hint) return;
 
   document.getElementById("hintText").innerHTML = hint;
   document.getElementById("hintDialog").showModal();
+}
+
+async function updateHintButton() {
+  const day = getDayFromURL();
+  const btn = document.getElementById("hint-button");
+  if (!btn) return;
+
+  if (day == 3) { 
+    btn.innerHTML = "Hinweis nicht verfügbar!";
+    btn.onclick = function () {
+      return;
+    };
+    return;         
+  }
+
+  if (hints.has(day)) {
+    btn.innerHTML = "🔍 Hinweis anzeigen";
+    btn.onclick = function () {
+      showHintDirect();
+    };
   } else {
-openNoCoinsDialog();
+    btn.innerHTML =
+      '🔍 Hinweis für 10 <img src="../assets/coin.png" class="mini-img">';
+    btn.onclick = function () {
+      showCheckDialog();
+    };
   }
 }
 
-function openNoCoinsDialog(){
-      const dlg = document.getElementById("noCoinsDialog");
-    dlg?.showModal();
+function openNoCoinsDialog() {
+  const dlg = document.getElementById("noCoinsDialog");
+  dlg?.showModal();
 }
 
 function closeNoCoinsDialog() {
@@ -148,14 +186,14 @@ function wrongSolution() {
     const el = document.querySelector(".day-content");
     el.classList.add("glitch");
     setTimeout(() => el.classList.remove("glitch"), 150);
-          const failOverlay = document.getElementById("failOverlay");
-failOverlay.classList.remove("hidden");
-failOverlay.classList.add("visible");
+    const failOverlay = document.getElementById("failOverlay");
+    failOverlay.classList.remove("hidden");
+    failOverlay.classList.add("visible");
 
-setTimeout(() => {
-  failOverlay.classList.remove("visible");
-  failOverlay.classList.add("hidden");
-}, 1500); // Nach 1.5 Sekunden wieder ausblenden
+    setTimeout(() => {
+      failOverlay.classList.remove("visible");
+      failOverlay.classList.add("hidden");
+    }, 1500); // Nach 1.5 Sekunden wieder ausblenden
   } else {
     const dlg = document.getElementById("noAnswerDialog");
     dlg?.showModal();
@@ -165,35 +203,35 @@ setTimeout(() => {
 function rightSolution(day) {
   if (coins > 0) {
     if (!opened.has(day)) {
-          addCoin();
+      addCoin();
       opened.add(day);
       saveOpened();
       logSolved(day);
     }
 
-  // Konfetti-Effekt (rot/grün)
-  confetti({
-    particleCount: 1000, // MEHR!
-    spread: 110, // breiter
-    startVelocity: 50, // schneller los
-    scalar: 1.5, // GRÖSSER!
-    gravity: 0.6, // länger in der Luft
-    origin: { y: 1.3 },
-    colors: [
-      "#962a2a", // dunkelrot
-      "#E24A39", // hellrot
-      "#065308", // dunkelgrün
-      "#2E8B33", // hellgrün
-      "#FFD530", // gold
-      "#F8F4EF", // schnee
-    ],
-    zIndex: 9999,
-  });
+    // Konfetti-Effekt (rot/grün)
+    confetti({
+      particleCount: 1000, // MEHR!
+      spread: 110, // breiter
+      startVelocity: 50, // schneller los
+      scalar: 1.5, // GRÖSSER!
+      gravity: 0.6, // länger in der Luft
+      origin: { y: 1.3 },
+      colors: [
+        "#962a2a", // dunkelrot
+        "#E24A39", // hellrot
+        "#065308", // dunkelgrün
+        "#2E8B33", // hellgrün
+        "#FFD530", // gold
+        "#F8F4EF", // schnee
+      ],
+      zIndex: 9999,
+    });
 
-  setTimeout(() => {
-    window.location.href = "../index.html";
-  }, 1000);
-   } else {
+    setTimeout(() => {
+      window.location.href = "../index.html";
+    }, 1000);
+  } else {
     const dlg = document.getElementById("noAnswerDialog");
     dlg?.showModal();
   }
@@ -226,22 +264,13 @@ function lockFutureDays() {
   const openedDays = getOpenedDays();
 
   links.forEach((link) => {
-    // NEU: Tag aus beiden URL-Varianten ziehen
     let day = null;
 
-    // 1) neue Variante: template.html?tag=12
     const qMatch = link.href.match(/[?&]tag=(\d+)/);
     if (qMatch) day = parseInt(qMatch[1], 10);
 
-    // 2) alte Variante: tage/12.html
-    if (day === null) {
-      const pathMatch = link.href.match(/tage\/(\d+)\.html/);
-      if (pathMatch) day = parseInt(pathMatch[1], 10);
-    }
-
     if (day === null) return;
 
-    // optional: skip intro/bonus
     if (day === 0 || day === 25) return;
 
     const prevDayUnlocked = day === 1 || openedDays.includes(day - 1);
@@ -255,12 +284,6 @@ function lockFutureDays() {
       link.style.pointerEvents = "auto";
     }
   });
-}
-
-
-function getDayFromUrl() {
-  const m = window.location.search.match(/tag=(\d+)/);
-  return m ? parseInt(m[1], 10) : 1;
 }
 
 async function loadDayContent(day) {
@@ -284,30 +307,34 @@ function getUserName() {
   return name;
 }
 
-const LOG_URL = "https://script.google.com/macros/s/AKfycbxE2viBiew4764LuIA6OevSyb2h5YNvIHkQEa3ym1BiEn_UftktZenu9XF8P5CVMz-btw/exec";
+const LOG_URL =
+  "https://script.google.com/macros/s/AKfycbxE2viBiew4764LuIA6OevSyb2h5YNvIHkQEa3ym1BiEn_UftktZenu9XF8P5CVMz-btw/exec";
 
 function logSolved(day) {
   const name = getUserName();
 
   fetch(LOG_URL, {
-  method: "POST",
-  mode: "no-cors",
-  body: new URLSearchParams({
-    name,
-    solved: "Tag " + day
-  })
-}).catch(() => {});
+    method: "POST",
+    mode: "no-cors",
+    body: new URLSearchParams({
+      name,
+      solved: "Tag " + day,
+    }),
+  }).catch(() => {});
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
-  const day = getDayFromUrl();
+  const day = getDayFromURL();
   loadDayContent(day);
 
   document
     .querySelector(".footer-today")
     ?.addEventListener("click", scrollToToday);
-loadHints();
+
+  loadHints();
   renderCoins();
   updateGallery();
   lockFutureDays();
+  updateHintButton();
 });
