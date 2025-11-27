@@ -9,10 +9,20 @@
   }
 
   function playSound(track, cost, day) {
-    // Wenn nicht genug Geld da ist → Stop
     if (coins < cost) {
       openNoCoinsDialog();
       return;
+    }
+
+    //nächsten Freischalten
+    if(track == "schlagzeug"){
+      document.getElementById("bass").disabled = false;
+    } else if(track == "bass"){
+      document.getElementById("glocken").disabled = false;
+    } else if(track == "glocken"){
+      document.getElementById("synth").disabled = false;
+    } else if(track == "synth"){
+      document.getElementById("melodie").disabled = false;
     }
 
     // Münzen abziehen

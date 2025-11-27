@@ -286,6 +286,12 @@ footer, nav{
   transition: all 0.15s ease;
 }
 
+button:disabled {
+  opacity: 0.5;
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
+
 .btn:hover,
 .solution-button:hover {
   filter: brightness(1.05);
@@ -596,3 +602,5 @@ h1{ color: var(--color-main-1); }
         font-size: 1.5rem;
         font-weight: bold;
       }
+
+
