@@ -2,13 +2,13 @@ const LS_KEY = "advent_opened";
 const LS_KEY_HINTS = "hints_opened";
 const LS_KEY_COINS = "advent_coins";
 const images = document.querySelector(".houses");
-const total = document.querySelectorAll(".houses img").length;
 const leftArrow = document.querySelector(".arrow.left");
 const rightArrow = document.querySelector(".arrow.right");
+const total = images ? images.querySelectorAll(".house").length : 0;
 const opened = new Set(JSON.parse(localStorage.getItem(LS_KEY) || "[]"));
 const hints = new Set(JSON.parse(localStorage.getItem(LS_KEY_HINTS) || "[]"));
-let coins = new Number(localStorage.getItem(LS_KEY_COINS) ?? "9");
-let currentIndex = 1;
+let coins = new Number(localStorage.getItem(LS_KEY_COINS) ?? "0");
+let currentIndex = 2;
 let HINTS = null;
 
 async function loadHints() {
@@ -102,7 +102,7 @@ function openHint() {
   closeCheckDialog();
 
   if (coins >= 10) {
-    // substractCoin(10); // wieder aktivieren, wenn du willst
+    substractCoin(10); // wieder aktivieren, wenn du willst
 
     const hint = getHintForDay(day);
 
@@ -243,23 +243,38 @@ function scrollToToday() {
 }
 
 function updateGallery() {
-  images.style.transform = `translateX(-${currentIndex * 100}%)`;
-  leftArrow.disabled = currentIndex === 1;
-  rightArrow.disabled = currentIndex === total - 2;
+  if (!images) return;
+
+  const houses = images.querySelectorAll(".house");
+  if (!houses.length) return;
+
+  const firstWidth = houses[0].getBoundingClientRect().width;
+
+  images.scrollTo({
+    left: (currentIndex - 1) * firstWidth,
+    behavior: "smooth",
+  });
+
+  if (leftArrow) leftArrow.disabled = currentIndex <= 2;
+  if (rightArrow) rightArrow.disabled = currentIndex === houses.length - 1;
 }
 
 function nextImage() {
-  if (currentIndex < total - 2) currentIndex++;
+  if (!images) return;
+  const houses = images.querySelectorAll(".house");
+  if (currentIndex < houses.length - 1) currentIndex++;
   updateGallery();
 }
 
 function prevImage() {
-  if (currentIndex > 1) currentIndex--;
+  if (!images) return;
+  if (currentIndex > 2) currentIndex--;
   updateGallery();
 }
 
 function lockFutureDays() {
-  const links = document.querySelectorAll(".houses a");
+    const links = document.querySelectorAll(".houses a");
+  if (!links.length) return;
   const today = todayDay();
   const openedDays = getOpenedDays();
 
@@ -334,7 +349,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadHints();
   renderCoins();
-  updateGallery();
-  lockFutureDays();
+
+  if (images) {      // WICHTIG: Gallery nur, wenn wirklich vorhanden
+    updateGallery();
+    lockFutureDays();
+  }
+
   updateHintButton();
 });
