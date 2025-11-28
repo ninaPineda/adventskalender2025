@@ -151,15 +151,17 @@ footer, nav{
 /* Bühne mit Padding, damit die Nachbarn "reinpeeken" */
 .street {
   width: 100vw;    
+  height: 100vh;
   margin-left: 50%;
-  transform: translateX(-50%) translateY(-27%);
-  overflow-x: hidden;
+  transform: translateX(-50%);
+  overflow: hidden;
 }
 
 /* Reihe der Slides */
 .houses {
   display: flex;
-  overflow-x: hidden;
+  overflow: hidden;
+  transform: translateY(-27%);
   scroll-behavior: smooth; /* nice to have */
 }
 
