@@ -153,6 +153,7 @@ footer, nav{
   width: 100vw;    
   margin-left: 50%;
   transform: translateX(-50%) translateY(-27%);
+  overflow-x: hidden;
 }
 
 /* Reihe der Slides */
