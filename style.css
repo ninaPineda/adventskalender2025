@@ -148,29 +148,51 @@ footer, nav{
   --peek: 15vw;   /* sichtbarer Rand links/rechts */
 }
 
-/* Bühne mit Padding, damit die Nachbarn "reinpeeken" */
 .street {
-  width: 100vw;    
+  width: 100vw;
   height: 100vh;
-  margin-left: 50%;
-  transform: translateX(-50%);
   overflow: hidden;
+  position: relative;
 }
 
-/* Reihe der Slides */
+.street img{
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;        /* genau dein Wunsch */
+  height: auto;
+
+  transform: translate(-50%, -50%);
+  object-fit: cover;  /* Zoom & Crop */
+  user-select: none;
+  -webkit-user-drag: none;
+  z-index: 0;
+}
+
 .houses {
   display: flex;
+  height: 100vh;     /* wichtig: Container = volle Höhe */
   overflow: hidden;
-  transform: translateY(-27%);
-  scroll-behavior: smooth; /* nice to have */
 }
 
 .house {
-  flex: 0 0 100%;
+  flex: 0 0 100vw;   /* ein Slide pro Screen */
+  height: 100vh;
+  position: relative;
 }
 
-.house img{ width: 100%; height: 100%; display: block; user-select: none; -webkit-user-drag: none; }
+.house img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;        /* genau dein Wunsch */
+  height: auto;
 
+  transform: translate(-50%, -50%);
+  object-fit: cover;  /* Zoom & Crop */
+  user-select: none;
+  -webkit-user-drag: none;
+}
 /* Pfeile bleiben wie gehabt */
 .arrow {
   position: absolute;
