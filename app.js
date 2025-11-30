@@ -1,4 +1,4 @@
-const LS_KEY = "advent_opened";
+ const LS_KEY = "advent_opened";
 const LS_KEY_HINTS = "hints_opened";
 const LS_KEY_COINS = "advent_coins";
 const images = document.querySelector(".houses");
@@ -273,8 +273,12 @@ function prevImage() {
 }
 
 function lockFutureDays() {
-    const links = document.querySelectorAll(".houses a");
+  const links = document.querySelectorAll(".houses a");
   if (!links.length) return;
+
+  const now = new Date();
+  const isDecember = now.getMonth() === 11; // 0 = Jan, 11 = Dez
+
   const today = todayDay();
   const openedDays = getOpenedDays();
 
@@ -283,11 +287,23 @@ function lockFutureDays() {
 
     const qMatch = link.href.match(/[?&]tag=(\d+)/);
     if (qMatch) day = parseInt(qMatch[1], 10);
-
     if (day === null) return;
 
+    // Startseite / 25 immer erlaubt
     if (day === 0 || day === 25) return;
 
+    // ❄️ Außerhalb von Dezember: alle Tage 1–24 sind immer gelockt
+    if (!isDecember && day >= 1 && day <= 24) {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        document.getElementById("lockedPopup")?.showModal();
+      });
+      link.style.filter = "grayscale(0.7) brightness(0.6)";
+      link.style.pointerEvents = "auto";
+      return;
+    }
+
+    // 🎄 Im Dezember gilt dein normales Advent-Logik
     const prevDayUnlocked = day === 1 || openedDays.includes(day - 1);
 
     if (day > today || !prevDayUnlocked) {
