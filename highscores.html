@@ -73,7 +73,7 @@
       .filter(Boolean);
 
     // Nach Zeit sortieren (alt → neu), damit wir pro Tag sauber erste/zweite/dritte haben
-    data.sort((a, b) => b.date - a.date);
+    data.sort((a, b) => a.date - b.date);
 
     // pro Tag: Liste der Einträge in Zeit-Reihenfolge
     const perTag = new Map(); // tag -> [entries...]
