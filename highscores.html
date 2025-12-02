@@ -105,7 +105,7 @@
 
     // Leaderboard sortieren
     const leaderboardArr = Object.entries(pointsPerName)
-      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+      .sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]));
 
     // "Heute" bestimmen: aktueller Tag (1–24)
     const todayTag = Math.min(new Date().getDate(), 24);
