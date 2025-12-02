@@ -105,7 +105,7 @@
 
     // Leaderboard sortieren
     const leaderboardArr = Object.entries(pointsPerName)
-      .sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]));
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
     // "Heute" bestimmen: aktueller Tag (1–24)
     const todayTag = Math.min(new Date().getDate(), 24);
@@ -161,7 +161,7 @@
             </tr>
           </thead>
           <tbody>
-            ${[...perTag.keys()].sort((a, b) => a - b).map(tag => {
+            ${[...perTag.keys()].sort((a, b) => b - a).map(tag => {
               const entries = perTag.get(tag).slice().sort((a, b) => b.date - a.date);
               const unique = [];
               const seen = new Set();
