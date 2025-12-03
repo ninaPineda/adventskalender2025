@@ -189,7 +189,14 @@ const userAnswer = document
   "die ärzte!",
   "die ärzte."
 ];
-    } 
+    } else if (day == 4){
+      correctAnswers = [
+        "3",
+        3,
+        "drei",
+        "03"
+      ]
+    }
 
 if (correctAnswers.includes(userAnswer)) {
 

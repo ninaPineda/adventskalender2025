@@ -220,6 +220,17 @@ footer, nav{
     box-shadow:var(--elev-1);
   backdrop-filter: blur(3px) saturate(1.05);
 }
+
+.question img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--elev-1);
+  backdrop-filter: blur(3px) saturate(1.05);
+}
+
 .wunschzettel-paper {
   background: #fffcf8f3;
   padding: 1.6rem;
@@ -554,7 +565,7 @@ h1{ color: var(--color-main-1); }
 }
 
 .answer-input {
-  width: 80%;
+  width: 100%;
   padding: 1rem;
   font-size: 1.2rem;
   border-radius: 1rem;
