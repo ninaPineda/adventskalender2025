@@ -221,6 +221,11 @@ footer, nav{
   backdrop-filter: blur(3px) saturate(1.05);
 }
 
+.question img{
+  width:100%;
+      border-radius:16px;
+}
+
 .wunschzettel-paper {
   background: #fffcf8f3;
   padding: 1.6rem;

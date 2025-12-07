@@ -235,6 +235,12 @@ function checkAnswer(day) {
       "monaco-ville", // wird manchmal so eingetippt
       "Monaco-Ville",
     ];
+  } else if (day == 8) {
+    correctAnswers = [
+      "55",
+      55,
+      "fünfundfünfzig"
+    ];
   }
 
   if (correctAnswers.includes(userAnswer)) {
