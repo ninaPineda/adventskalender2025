@@ -294,6 +294,40 @@ footer, nav{
   transition: all 0.15s ease;
 }
 
+.fill-btn-2 {
+  display: flex;             
+  justify-content: space-between; 
+  flex-direction: column;
+  align-items: center;       
+  height: 13rem;
+  width: 10rem;
+  margin: .5rem 0;
+  padding: .7rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .2px;
+  color: var(--color-black);
+  background: var(--color-accent);
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+
+  /* 3D-Look */
+  box-shadow: var(--elev-1);
+  transform: translateY(0);
+  transition: all 0.15s ease;
+}
+
+.square-btns{
+  align-items: center;
+justify-items: center;
+  width:100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
 .small-btn{
     display: flex;              /* statt inline-block */
   justify-content: space-between;  /* links + rechts */
@@ -315,6 +349,10 @@ footer, nav{
   box-shadow:var(--elev-1);
   transform: translateY(0);
   transition: all 0.15s ease;
+}
+
+.small-img{
+  width: 8rem;
 }
 
 button:disabled {
