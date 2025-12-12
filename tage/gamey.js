@@ -241,6 +241,11 @@ function checkAnswer(day) {
       55,
       "fünfundfünfzig"
     ];
+  } else if (day == 13) {
+    correctAnswers = [
+      "23",
+      23
+    ];
   }
 
   if (correctAnswers.includes(userAnswer)) {
