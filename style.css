@@ -217,13 +217,13 @@ footer, nav{
   color: var(--muted);
   background: var(--color-accent);
   border-radius:16px;
-    box-shadow:var(--elev-1);
+  box-shadow:var(--elev-1);
   backdrop-filter: blur(3px) saturate(1.05);
 }
 
 .question img{
   width:100%;
-      border-radius:16px;
+  border-radius:16px;
 }
 
 .wunschzettel-paper {

@@ -246,7 +246,41 @@ function checkAnswer(day) {
       "23",
       23
     ];
-  }
+  } else if (day == 151) {
+  correctAnswers = [
+    "leise rieselt der schnee",
+    "leise rieselt schnee",
+    "leise rieselt der sne",
+    "leise rieselt der shnee",
+    "leise rieselt der schneee",
+    "leise rieselt",
+    "rieselt der schnee",
+    "leise rieselt der schnee lied"
+  ];
+} else if (day == 152) {
+  correctAnswers = [
+    "fröhliche weihnacht",
+    "fröhliche weihnachten",
+    "fröhliche weihnacht überall",
+    "fröhliche weihnachten überall",
+    "fröliche weihnacht",
+    "froehliche weihnacht",
+    "fröhliche weihnacht ueberall",
+    "fröhliche weihnacht lied",
+    "froehliche weihnachten"
+  ];
+} else if (day == 15) {
+  correctAnswers = [
+    "stille nacht",
+    "stille nacht heilige nacht",
+    "stille nacht heilige nacht lied",
+    "stille nacht heilge nacht",
+    "stille nacht heillige nacht",
+    "stille nacht heilige nach",
+    "stille nacht heilige nacht deutsch",
+    "stille nacht song"
+  ];
+}
 
   if (correctAnswers.includes(userAnswer)) {
     // Zwischensteps (31, 32, 33, 34)
@@ -302,7 +336,33 @@ function checkAnswer(day) {
       setTimeout(() => {
         window.location.href = `template.html?tag=${nextStep}`;
       }, 600);
-    } else {
+    } else if ([151, 152].includes(day)) {
+      // Nächsten Step berechnen
+      const nextStep = day + 1;
+
+      // Konfetti-Effekt
+      confetti({
+        particleCount: 1000,
+        spread: 110,
+        startVelocity: 50,
+        scalar: 1.5,
+        gravity: 0.6,
+        origin: { y: 1.3 },
+        colors: [
+          "#962a2a",
+          "#E24A39",
+          "#065308",
+          "#2E8B33",
+          "#FFD530",
+          "#F8F4EF",
+        ],
+        zIndex: 9999,
+      });
+
+      setTimeout(() => {
+        window.location.href = `template.html?tag=${nextStep}`;
+      }, 600);
+    }else {
       // Finale Lösung
       rightSolution(day);
     }
