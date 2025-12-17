@@ -238,7 +238,7 @@ function rightSolution(day) {
 }
 
 function scrollToToday() {
-  currentIndex = todayDay();
+  currentIndex = todayDay() + 1;
   updateGallery();
 }
 
