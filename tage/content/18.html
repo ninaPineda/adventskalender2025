@@ -1,6 +1,164 @@
 <p class="question">
-  Im Tourismusbüro des Weihnachtsdorfes ging folgende Nachricht des Hackers ein.
+  Die Wichtel der Spielzeugfabrik haben das ganze Jahr über kleine Schlüsselanhänger
+  hergestellt. Leider ist ihr produktionsplan vom Hacker gesperrt worden und jetzt wissen sie
+  nicht mehr, welches Tier sie jetzt produzieren sollen.<br>
+  <strong>Erkennst du die Reihenfolge und kannst sagen, welches Tier als nächstes an der Reihe ist?</strong>
 </p>
 
-<button class="solution-button" onclick="rightSolution(18)">Lösung!</button>
-<button class="solution-button" onclick="wrongSolution()">Keine Lösung!</button>
+<!-- THUMBNAILS GRID -->
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px;margin:12px 0 18px;">
+  <a href="#img01" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/01.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img02" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/02.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img03" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/03.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img04" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/04.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img05" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/05.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img06" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/06.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img07" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/07.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img08" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/08.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img09" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/09.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img10" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/010.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+  <a href="#img11" style="display:block;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.18);text-decoration:none;">
+    <img src="../assets/day18/011.jpg" alt="" style="width:100%;height:90px;object-fit:cover;display:block;">
+  </a>
+</div>
+
+<!-- LIGHTBOXES (CSS-only über :target) -->
+<style>
+  .lb{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.78);z-index:9999;padding:18px}
+  .lb:target{display:grid}
+</style>
+
+<div id="img01" class="lb">
+  <div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+    <a href="#" style="position:absolute;inset:0;display:block;"></a>
+    <img src="../assets/day18/01.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+    <a href="#img12" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+    <a href="#img02" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+  </div>
+</div>
+
+<div id="img02" class="lb">
+  <div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+    <a href="#" style="position:absolute;inset:0;display:block;"></a>
+    <img src="../assets/day18/02.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+    <a href="#img01" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+    <a href="#img03" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+  </div>
+</div>
+
+<div id="img03" class="lb">
+  <div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+    <a href="#" style="position:absolute;inset:0;display:block;"></a>
+    <img src="../assets/day18/03.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+    <a href="#img02" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+    <a href="#img04" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+  </div>
+</div>
+
+<div id="img04" class="lb"><div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+  <a href="#" style="position:absolute;inset:0;display:block;"></a>
+  <img src="../assets/day18/04.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+  <a href="#img03" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+  <a href="#img05" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+</div></div>
+
+<div id="img05" class="lb"><div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+  <a href="#" style="position:absolute;inset:0;display:block;"></a>
+  <img src="../assets/day18/05.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+  <a href="#img04" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+  <a href="#img06" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+</div></div>
+
+<div id="img06" class="lb"><div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+  <a href="#" style="position:absolute;inset:0;display:block;"></a>
+  <img src="../assets/day18/06.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+  <a href="#img05" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+  <a href="#img07" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+</div></div>
+
+<div id="img07" class="lb"><div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+  <a href="#" style="position:absolute;inset:0;display:block;"></a>
+  <img src="../assets/day18/07.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+  <a href="#img06" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+  <a href="#img08" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+</div></div>
+
+<div id="img08" class="lb"><div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+  <a href="#" style="position:absolute;inset:0;display:block;"></a>
+  <img src="../assets/day18/08.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+  <a href="#img07" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+  <a href="#img09" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+</div></div>
+
+<div id="img09" class="lb"><div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+  <a href="#" style="position:absolute;inset:0;display:block;"></a>
+  <img src="../assets/day18/09.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+  <a href="#img08" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+  <a href="#img10" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+</div></div>
+
+<div id="img10" class="lb"><div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+  <a href="#" style="position:absolute;inset:0;display:block;"></a>
+  <img src="../assets/day18/010.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+  <a href="#img09" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+  <a href="#img11" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+</div></div>
+
+<div id="img11" class="lb"><div style="position:relative;max-width:min(92vw,980px);max-height:82vh;width:100%;">
+  <a href="#" style="position:absolute;inset:0;display:block;"></a>
+  <img src="../assets/day18/011.jpg" alt="" style="width:100%;max-height:82vh;object-fit:contain;display:block;border-radius:14px;background:#111;border:1px solid rgba(255,255,255,.18);">
+  <a href="#img10" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">‹</a>
+  <a href="#img01" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font:700 18px/1 system-ui;">›</a>
+</div></div>
+
+
+<!-- Deine Buttons unten können bleiben wie sie sind -->
+<div class="square-btns">
+  <div class="fill-btn-2">
+    <img class="fill-btn-img" src="../assets/day18/013.jpg">
+    <button onclick="wrongSolution()" class="small-btn">
+      Wählen <strong>1 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+
+  <div class="fill-btn-2">
+    <img class="fill-btn-img" src="../assets/day18/012.jpg">
+    <button onclick="rightSolution(18)" class="small-btn">
+      Wählen <strong>1 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+
+  <div class="fill-btn-2">
+    <img class="fill-btn-img" src="../assets/day18/011.jpg">
+    <button onclick="wrongSolution()" class="small-btn">
+      Wählen <strong>1 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+
+  <div class="fill-btn-2">
+    <img class="fill-btn-img" src="../assets/day18/014.jpg">
+    <button onclick="wrongSolution()" class="small-btn">
+      Wählen <strong>1 <img class="mini-img" src="../assets/coin.png"></strong>
+    </button>
+  </div>
+</div>
