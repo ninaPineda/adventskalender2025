@@ -282,8 +282,8 @@ function checkAnswer(day) {
   ];
 } else if (day == 20) {
     correctAnswers = [
-      "857",
-      857
+      "805",
+      805
     ];
   }
 
