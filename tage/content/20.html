@@ -1,6 +1,17 @@
 <p class="question">
-  Im Tourismusbüro des Weihnachtsdorfes ging folgende Nachricht des Hackers ein.
+  Wichtelin Mike steht vor einem verschlossenen Zahlenschloss und muss die richtige Kombination herausfinden.
+  Auf dem Schloss stehen folgende Hinweise:
+  </br></br>
+
+  <strong>826</strong> – Eine Ziffer ist korrekt und steht an der richtigen Position.
+  </br>
+  <strong>672</strong> – Alle Ziffern sind falsch.
+  </br>
+  <strong>507</strong> – Zwei Ziffern sind korrekt, eine ist an der richtigen Position.
+  </br></br>
+
+  <strong>Wie lautet die Zahlenkombination für dieses Schloss?</strong>
 </p>
 
-<button class="solution-button" onclick="rightSolution(20)">Lösung!</button>
-<button class="solution-button" onclick="wrongSolution()">Keine Lösung!</button>
+<input id="answerInput" class="answer-input" type="number" inputmode="numeric" min="0" step="1" placeholder="Zahl eingeben">
+<button class="solution-button" onclick="checkAnswer(20)">Antwort prüfen</button>
