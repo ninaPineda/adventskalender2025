@@ -280,7 +280,12 @@ function checkAnswer(day) {
     "stille nacht heilige nacht deutsch",
     "stille nacht song"
   ];
-}
+} else if (day == 20) {
+    correctAnswers = [
+      "857",
+      857
+    ];
+  }
 
   if (correctAnswers.includes(userAnswer)) {
     // Zwischensteps (31, 32, 33, 34)
