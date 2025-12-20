@@ -226,6 +226,16 @@ footer, nav{
   border-radius:16px;
 }
 
+.small-img{
+  width:25%;
+    padding:1.2rem; margin:1rem 0; line-height:150%;
+  color: var(--muted);
+  background: var(--color-accent);
+  border-radius:16px;
+  box-shadow:var(--elev-1);
+  backdrop-filter: blur(3px) saturate(1.05);
+}
+
 .wunschzettel-paper {
   background: #fffcf8f3;
   padding: 1.6rem;
