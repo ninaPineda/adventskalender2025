@@ -94,9 +94,10 @@ function trackLabel(track) {
 
 function checkAnswer(day) {
   const userAnswer = document
-    .getElementById("answerInput")
-    .value.toLowerCase()
-    .trim();
+  .getElementById("answerInput")
+  .value
+  .toLowerCase()
+  .trim();
   let correctAnswers = [];
 
   if (day == 2) {
@@ -285,11 +286,81 @@ function checkAnswer(day) {
       "805",
       805
     ];
-  }
+} else if (day == 221) {
+  correctAnswers = [
+    "last christmas",
+    "lastchristmas",
+    "last cristmas",
+    "last chrismas",
+    "last xmas",
+    "last christmas wham",
+    "wham last christmas",
+    "last christmas song",
+    "last christmas lied",
+    // gedankenfehler
+    "christmas last",
+    "the last christmas",
+    "last xmas wham",
+    "whams last christmas",
+  ];
+} else if (day == 222) {
+  correctAnswers = [
+    "rocking around the christmas tree",
+    "rockin around the christmas tree",
+    "rocking around christmas tree",
+    "rocking around the xmas tree",
+    "rocking arround the christmas tree",
+    "rocking around the christmass tree",
+    "rocking around the tree",
+    // gedankenfehler
+    "rock around the christmas tree",
+    "rocking around the tree song",
+    "rock around the tree",
+  ];
+} else if (day == 223) {
+  correctAnswers = [
+    "do they know its christmas time",
+    "do they know it's christmas time",
+    "do they know its christmas",
+    "do they know christmas time",
+    "do they know its xmas",
+    "band aid do they know its christmas",
+    // gedankenfehler
+    "do they know its christmas song",
+    "its christmas time band aid",
+    "christmas time band aid",
+  ];
+} else if (day == 224) {
+  correctAnswers = [
+    "its beginning to look a lot like christmas",
+    "it's beginning to look a lot like christmas",
+    "its beginning to look like christmas",
+    "beginning to look a lot like christmas",
+    "its beginning to look alot like christmas",
+    "its beginnig to look a lot like christmas",
+    // gedankenfehler
+    "beginning to look like christmas",
+    "it begins to look a lot like christmas",
+    "it is beginning to look like christmas",
+  ];
+} else if (day == 22) {
+  correctAnswers = [
+    "its the most wonderful time of the year",
+    "it's the most wonderful time of the year",
+    "most wonderful time of the year",
+    "the most wonderful time of the year",
+    "its the most wunderful time of the year",
+    "its the most wonderful time of year",
+    // gedankenfehler
+    "the most wonderful time",
+    "most wonderful time",
+    "wonderful time of the year",
+  ];
+}
 
   if (correctAnswers.includes(userAnswer)) {
-    // Zwischensteps (31, 32, 33, 34)
-    if ([31, 32, 33, 34].includes(day)) {
+    // Zwischensteps
+    if ([31, 32, 33, 34, 51, 52, 53, 54, 151, 152, 221, 222, 223, 224].includes(day)) {
       // Nächsten Step berechnen
       const nextStep = day + 1;
 
@@ -315,59 +386,7 @@ function checkAnswer(day) {
       setTimeout(() => {
         window.location.href = `template.html?tag=${nextStep}`;
       }, 600);
-    } else if ([51, 52, 53, 54].includes(day)) {
-      // Nächsten Step berechnen
-      const nextStep = day + 1;
-
-      // Konfetti-Effekt
-      confetti({
-        particleCount: 1000,
-        spread: 110,
-        startVelocity: 50,
-        scalar: 1.5,
-        gravity: 0.6,
-        origin: { y: 1.3 },
-        colors: [
-          "#962a2a",
-          "#E24A39",
-          "#065308",
-          "#2E8B33",
-          "#FFD530",
-          "#F8F4EF",
-        ],
-        zIndex: 9999,
-      });
-
-      setTimeout(() => {
-        window.location.href = `template.html?tag=${nextStep}`;
-      }, 600);
-    } else if ([151, 152].includes(day)) {
-      // Nächsten Step berechnen
-      const nextStep = day + 1;
-
-      // Konfetti-Effekt
-      confetti({
-        particleCount: 1000,
-        spread: 110,
-        startVelocity: 50,
-        scalar: 1.5,
-        gravity: 0.6,
-        origin: { y: 1.3 },
-        colors: [
-          "#962a2a",
-          "#E24A39",
-          "#065308",
-          "#2E8B33",
-          "#FFD530",
-          "#F8F4EF",
-        ],
-        zIndex: 9999,
-      });
-
-      setTimeout(() => {
-        window.location.href = `template.html?tag=${nextStep}`;
-      }, 600);
-    }else {
+    } else {
       // Finale Lösung
       rightSolution(day);
     }
