@@ -357,6 +357,11 @@ function checkAnswer(day) {
     "most wonderful time",
     "wonderful time of the year",
   ];
+} else if (day == 23) {
+    correctAnswers = [
+      "27",
+      27
+    ];
 }
 
   if (correctAnswers.includes(userAnswer)) {
