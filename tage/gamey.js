@@ -322,6 +322,7 @@ function checkAnswer(day) {
     "do they know its christmas time",
     "do they know it's christmas time",
     "do they know its christmas",
+     "do they know it's christmas",
     "do they know christmas time",
     "do they know its xmas",
     "band aid do they know its christmas",
@@ -356,6 +357,11 @@ function checkAnswer(day) {
     "most wonderful time",
     "wonderful time of the year",
   ];
+} else if (day == 23) {
+    correctAnswers = [
+      "27",
+      27
+    ];
 }
 
   if (correctAnswers.includes(userAnswer)) {
